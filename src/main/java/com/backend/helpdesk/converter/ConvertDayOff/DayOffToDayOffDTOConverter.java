@@ -1,5 +1,6 @@
-package com.backend.helpdesk.converter;
+package com.backend.helpdesk.converter.ConvertDayOff;
 
+import com.backend.helpdesk.converter.Converter;
 import com.backend.helpdesk.entity.DayOff;
 import com.backend.helpdesk.DTO.DayOffDTO;
 import org.springframework.stereotype.Component;

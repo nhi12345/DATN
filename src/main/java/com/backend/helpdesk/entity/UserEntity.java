@@ -1,13 +1,19 @@
 package com.backend.helpdesk.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
+@Data
 @Entity(name = "users")
+@AllArgsConstructor
 public class UserEntity {
 
     @Id
@@ -28,7 +34,7 @@ public class UserEntity {
 
     private Date birthday;
 
-    private boolean sex;
+    private boolean gender;
 
     private String address;
 
@@ -52,11 +58,14 @@ public class UserEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_skills",
+            name = "user_project",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "skill_id")
+            inverseJoinColumns = @JoinColumn(name = "project_id")
     )
-    private Set<SkillsEntity> skillsEntities;
+    private List<Project> projects;
+
+    @OneToMany(mappedBy = "userEntity")
+    private List<Comment> comments;
 
     public UserEntity() {
     }
@@ -124,12 +133,12 @@ public class UserEntity {
         this.birthday = birthday;
     }
 
-    public boolean isSex() {
-        return sex;
+    public boolean isGender() {
+        return gender;
     }
 
-    public void setSex(boolean sex) {
-        this.sex = sex;
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
     public String getAddress() {
@@ -154,14 +163,6 @@ public class UserEntity {
 
     public void setRoleEntities(Set<RoleEntity> roleEntities) {
         this.roleEntities = roleEntities;
-    }
-
-    public Set<SkillsEntity> getSkillsEntities() {
-        return skillsEntities;
-    }
-
-    public void setSkillsEntities(Set<SkillsEntity> skillsEntities) {
-        this.skillsEntities = skillsEntities;
     }
 
     public byte[] getAvatar() {
