@@ -25,4 +25,7 @@ public class Status {
 
     @OneToMany(mappedBy = "status")
     List<DayOff> dayOffs;
+
+    @OneToMany(mappedBy = "status")
+    List<Project> projects;
 }

@@ -3,7 +3,9 @@ package com.backend.helpdesk.converter.ConvertProject;
 import com.backend.helpdesk.DTO.ProjectDTO;
 import com.backend.helpdesk.converter.Converter;
 import com.backend.helpdesk.entity.Project;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProjectToProjectDTOConvert extends Converter<Project, ProjectDTO> {
     @Override
     public ProjectDTO convert(Project source) {
@@ -14,6 +16,7 @@ public class ProjectToProjectDTOConvert extends Converter<Project, ProjectDTO> {
         projectDTO.setCreateAt(source.getCreateAt());
         projectDTO.setUpdateAt(source.getUpdateAt());
         projectDTO.setUserIdCreate(source.getUserCreate().getId());
+        projectDTO.setStatus(source.getStatus().getName());
         return projectDTO;
     }
 }

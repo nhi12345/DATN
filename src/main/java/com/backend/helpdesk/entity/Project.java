@@ -46,6 +46,11 @@ public class Project {
     @JoinColumn(name = "user_create")
     private UserEntity userCreate;
 
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status")
+    private Status status;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "project_card",
@@ -56,4 +61,5 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     private List<Task> tasks;
+
 }
