@@ -67,6 +67,9 @@ public class UserEntity {
     @OneToMany(mappedBy = "userEntity")
     private List<Comment> comments;
 
+    @OneToMany(mappedBy = "userCreate")
+    private List<Card> cards;
+
     public UserEntity() {
     }
 

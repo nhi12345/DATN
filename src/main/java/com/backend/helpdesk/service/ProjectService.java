@@ -44,12 +44,8 @@ public class ProjectService {
     @Autowired
     private RoleRepository roleRepository;
 
-    public int getUserId() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        UserEntity userEntity = userRepository.findByEmail(email);
-        return userEntity.getId();
-    }
+    @Autowired
+    private UserService userService;
 
     public List<ProjectDTO> getAllProject() {
         Status status = statusRepository.findByName(Constants.APPROVED);
@@ -60,10 +56,10 @@ public class ProjectService {
         Calendar calendar = Calendar.getInstance();
         projectDTO.setCreateAt(calendar);
         projectDTO.setUpdateAt(calendar);
-        projectDTO.setUserIdCreate(getUserId());
+        projectDTO.setUserIdCreate(userService.getUserId());
         projectDTO.setStatus(Constants.PENDING);
         Project project = projectDTOToProjectConvert.convert(projectDTO);
-        UserEntity userEntity=userRepository.findById(getUserId()).get();
+        UserEntity userEntity=userRepository.findById(userService.getUserId()).get();
         List<Project> projects=new ArrayList<>();
         projects.add(project);
         userEntity.setProjects(projects);
@@ -77,9 +73,9 @@ public class ProjectService {
             throw new NotFoundException("project not found!");
         }
         if (project.get().getUserCreate() == null) {
-            project.get().setUserCreate(userRepository.findById(getUserId()).get());
+            project.get().setUserCreate(userRepository.findById(userService.getUserId()).get());
         }
-        if (project.get().getUserCreate().getId() != getUserId() || !userRepository.findById(project.get().getUserCreate().getId()).get().getRoleEntities().contains(roleRepository.findByName(Constants.ADMIN))) {
+        if (project.get().getUserCreate().getId() != userService.getUserId() || !userRepository.findById(project.get().getUserCreate().getId()).get().getRoleEntities().contains(roleRepository.findByName(Constants.ADMIN))) {
             throw new BadRequestException("Not have access");
         }
         Calendar calendar = Calendar.getInstance();
@@ -117,8 +113,12 @@ public class ProjectService {
         if(userEntity==null){
             throw new NotFoundException("User not found!");
         }
-        List<Project> projects = new ArrayList<>();
-        projects.add(project.get());
+        List<Project> projects = userEntity.getProjects();
+        if(!projects.contains(project.get())) {
+            projects.add(project.get());
+        }else {
+            throw new BadRequestException("User is existed!");
+        }
         userEntity.setProjects(projects);
         userRepository.save(userEntity);
         return project.get();

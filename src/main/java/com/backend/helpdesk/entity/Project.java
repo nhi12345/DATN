@@ -51,14 +51,6 @@ public class Project {
     @JoinColumn(name = "status")
     private Status status;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "project_card",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "card_id")
-    )
-    private List<Card> cards;
-
     @OneToMany(mappedBy = "project")
     private List<Task> tasks;
 

@@ -58,4 +58,5 @@ public class ProjectController {
     public Project removeUserForProject(@PathVariable("id") int id,@RequestParam(value = "email", required = false) String email){
         return projectService.removeUserInProject(id,email);
     }
+
 }
