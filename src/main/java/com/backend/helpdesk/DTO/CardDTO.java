@@ -18,4 +18,6 @@ public class CardDTO {
     private Calendar updateAt;
 
     private int idUserCreate;
+
+    private int idProject;
 }

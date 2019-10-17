@@ -43,8 +43,12 @@ public class CardService {
     @Autowired
     private ProjectRepository projectRepository;
 
-    public List<CardDTO> getAllCard(){
-        return cardToCardDTOConvert.convert(cardRepository.findAll());
+    public List<CardDTO> getAllCardByProject(int id) {
+        Optional<Project> project=projectRepository.findById(id);
+        if(!project.isPresent()){
+            throw new NotFoundException("Project not found");
+        }
+        return cardToCardDTOConvert.convert(cardRepository.findByProject(project.get()));
     }
 
     public Card addCard(int id,CardDTO cardDTO){
@@ -61,11 +65,8 @@ public class CardService {
         cardDTO.setUpdateAt(calendar);
         cardDTO.setCreateAt(calendar);
         cardDTO.setIdUserCreate(userService.getUserId());
-        Card card=cardDTOToCardConvert.convert(cardDTO);
-        List<Project> projects=new ArrayList<>();
-        projects.add(project1);
-        card.setProjects(projects);
-        return cardRepository.save(card);
+        cardDTO.setIdProject(id);
+        return cardRepository.save(cardDTOToCardConvert.convert(cardDTO));
     }
 
     public Card editCard(int id,CardDTO cardDTO){

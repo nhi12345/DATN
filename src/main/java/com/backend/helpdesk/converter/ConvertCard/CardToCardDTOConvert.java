@@ -15,6 +15,7 @@ public class CardToCardDTOConvert extends Converter<Card, CardDTO> {
         cardDTO.setCreateAt(source.getCreateAt());
         cardDTO.setUpdateAt(source.getUpdateAt());
         cardDTO.setIdUserCreate(source.getUserCreate().getId());
+        cardDTO.setIdProject(source.getProject().getId());
         return cardDTO;
     }
 }
