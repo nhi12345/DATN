@@ -16,8 +16,8 @@ public class CardController {
     @Autowired
     private CardService cardService;
 
-    @Secured("ROLE_EMPLOYEE")
-    @GetMapping("/{id}")
+    @Secured("ROLE_EMPLOYEES")
+    @GetMapping("/project/{id}")
     public List<CardDTO> getAllCard(@PathVariable("id")int id) {
         return cardService.getAllCardByProject(id);
     }

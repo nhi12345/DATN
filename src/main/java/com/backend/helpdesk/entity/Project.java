@@ -52,9 +52,6 @@ public class Project {
     private Status status;
 
     @OneToMany(mappedBy = "project")
-    private List<Task> tasks;
-
-    @OneToMany(mappedBy = "project")
     private List<Card> cards;
 
 }

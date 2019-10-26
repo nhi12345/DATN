@@ -24,6 +24,12 @@ public class ProjectController {
     }
 
     @Secured("ROLE_MANAGE")
+    @GetMapping("/{id}")
+    public ProjectDTO getProjectById(@PathVariable("id") int id) {
+        return projectService.getProjectById(id);
+    }
+
+    @Secured("ROLE_MANAGE")
     @PostMapping
     public Project addProject(@Valid @RequestBody ProjectDTO projectDTO) {
         return projectService.addProject(projectDTO);
@@ -49,14 +55,14 @@ public class ProjectController {
 
     @Secured("ROLE_ADMIN")
     @PutMapping("/add_user/{id}")
-    public Project addUserForProject(@PathVariable("id") int id,@RequestParam(value = "email", required = false) String email){
-        return projectService.addUserForProject(id,email);
+    public Project addUserForProject(@PathVariable("id") int id, @RequestParam(value = "email", required = false) String email) {
+        return projectService.addUserForProject(id, email);
     }
 
     @Secured("ROLE_ADMIN")
     @PutMapping("/remove_user/{id}")
-    public Project removeUserForProject(@PathVariable("id") int id,@RequestParam(value = "email", required = false) String email){
-        return projectService.removeUserInProject(id,email);
+    public Project removeUserForProject(@PathVariable("id") int id, @RequestParam(value = "email", required = false) String email) {
+        return projectService.removeUserInProject(id, email);
     }
 
 }

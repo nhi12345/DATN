@@ -52,6 +52,14 @@ public class ProjectService {
         return projectToProjectDTOConvert.convert(projectRepository.findByStatus(status));
     }
 
+    public ProjectDTO getProjectById(int id){
+        Optional<Project> project = projectRepository.findById(id);
+        if (!project.isPresent()) {
+            throw new NotFoundException("project not found!");
+        }
+        return projectToProjectDTOConvert.convert(project.get());
+    }
+
     public Project addProject(ProjectDTO projectDTO) {
         Calendar calendar = Calendar.getInstance();
         projectDTO.setCreateAt(calendar);

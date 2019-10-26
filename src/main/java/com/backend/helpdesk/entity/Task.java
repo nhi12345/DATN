@@ -50,11 +50,6 @@ public class Task {
     @JoinColumn(name = "card_id")
     private Card card;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id")
-    private Project project;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "task_user",
