@@ -1,6 +1,5 @@
 package com.backend.helpdesk.DTO;
 
-import com.backend.helpdesk.entity.UserEntity;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

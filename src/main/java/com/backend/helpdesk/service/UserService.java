@@ -31,7 +31,7 @@ public class UserService {
     public int getUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        UserEntity userEntity = userRepository.findByEmail(email);
+        UserEntity userEntity = userRepository.findByEmail(email).get();
         return userEntity.getId();
     }
 

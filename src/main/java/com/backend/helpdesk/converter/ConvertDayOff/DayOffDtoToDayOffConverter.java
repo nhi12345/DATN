@@ -1,11 +1,13 @@
 package com.backend.helpdesk.converter.ConvertDayOff;
-
+import com.backend.helpdesk.DTO.DayOffTypeDTO;
+import com.backend.helpdesk.DTO.StatusDTO;
+import com.backend.helpdesk.DTO.UserDTO;
 import com.backend.helpdesk.converter.Converter;
 import com.backend.helpdesk.entity.DayOff;
 import com.backend.helpdesk.DTO.DayOffDTO;
-import com.backend.helpdesk.repository.DayOffTypeRepository;
-import com.backend.helpdesk.repository.StatusRepository;
-import com.backend.helpdesk.repository.UserRepository;
+import com.backend.helpdesk.entity.DayOffType;
+import com.backend.helpdesk.entity.Status;
+import com.backend.helpdesk.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,13 +15,13 @@ import org.springframework.stereotype.Component;
 public class DayOffDtoToDayOffConverter extends Converter<DayOffDTO, DayOff> {
 
     @Autowired
-    private StatusRepository statusRepository;
+    private Converter<UserDTO, UserEntity> userDTOUserEntityConverter;
 
     @Autowired
-    private UserRepository userRepository;
+    private Converter<StatusDTO, Status> statusDTOStatusConverter;
 
     @Autowired
-    private DayOffTypeRepository dayOffTypeRepository;
+    private Converter<DayOffTypeDTO, DayOffType> dayOffTypeDTODayOffTypeConverter;
 
     @Override
     public DayOff convert(DayOffDTO source) {
@@ -29,9 +31,9 @@ public class DayOffDtoToDayOffConverter extends Converter<DayOffDTO, DayOff> {
         dayOff.setDayStartOff(source.getDayStartOff());
         dayOff.setDayEndOff(source.getDayEndOff());
         dayOff.setDescription(source.getDescription());
-        dayOff.setUserEntity(userRepository.findById(source.getUserEntity()).get());
-        dayOff.setStatus(statusRepository.findById(source.getStatus()));
-        dayOff.setDayOffType(dayOffTypeRepository.findById(source.getDayOffType()));
+        dayOff.setUserEntity(userDTOUserEntityConverter.convert(source.getUserEntity()));
+        dayOff.setStatus(statusDTOStatusConverter.convert(source.getStatus()));
+        dayOff.setDayOffType(dayOffTypeDTODayOffTypeConverter.convert(source.getDayOffType()));
         return dayOff;
     }
 }

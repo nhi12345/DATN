@@ -95,16 +95,16 @@ public class TaskService {
         if (!task.isPresent()) {
             throw new NotFoundException("Task not found!");
         }
-        UserEntity userEntity=userRepository.findByEmail(email);
-        if(userEntity==null){
+        Optional<UserEntity> userEntity=userRepository.findByEmail(email);
+        if(!userEntity.isPresent()){
             throw new NotFoundException("User not found!");
         }
         Project project=task.get().getCard().getProject();
-        if(!userEntity.getProjects().contains(project)){
+        if(!userEntity.get().getProjects().contains(project)){
             throw new BadRequestException("User not allow!");
         }
         List<UserEntity> userEntities=new ArrayList<>();
-        userEntities.add(userEntity);
+        userEntities.add(userEntity.get());
         task.get().setUserEntities(userEntities);
         taskRepository.save(task.get());
         return taskToTaskDTOConvert.convert(task.get());

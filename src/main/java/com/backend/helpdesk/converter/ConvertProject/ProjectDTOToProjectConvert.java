@@ -28,7 +28,7 @@ public class ProjectDTOToProjectConvert extends Converter<ProjectDTO, Project> {
         project.setCreateAt(source.getCreateAt());
         project.setUpdateAt(source.getUpdateAt());
         project.setUserCreate(userRepository.findById(source.getUserIdCreate()).get());
-        project.setStatus(statusRepository.findByName(source.getStatus()));
+        project.setStatus(statusRepository.findByName(source.getStatus()).get());
         return project;
     }
 }

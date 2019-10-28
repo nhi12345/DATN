@@ -48,8 +48,8 @@ public class ProjectService {
     private UserService userService;
 
     public List<ProjectDTO> getAllProject() {
-        Status status = statusRepository.findByName(Constants.APPROVED);
-        return projectToProjectDTOConvert.convert(projectRepository.findByStatus(status));
+        Optional<Status> status = statusRepository.findByName(Constants.APPROVED);
+        return projectToProjectDTOConvert.convert(projectRepository.findByStatus(status.get()));
     }
 
     public ProjectDTO getProjectById(int id){
@@ -90,7 +90,7 @@ public class ProjectService {
         project.get().setName(projectDTO.getName());
         project.get().setDescription(projectDTO.getDescription());
         project.get().setUpdateAt(calendar);
-        project.get().setStatus(statusRepository.findByName(Constants.PENDING));
+        project.get().setStatus(statusRepository.findByName(Constants.PENDING).get());
         return projectRepository.save(project.get());
     }
 
@@ -99,7 +99,7 @@ public class ProjectService {
         if (!project.isPresent()) {
             throw new NotFoundException("project not found!");
         }
-        project.get().setStatus(statusRepository.findByName(Constants.REJECTED));
+        project.get().setStatus(statusRepository.findByName(Constants.REJECTED).get());
         return projectRepository.save(project.get());
     }
 
@@ -108,7 +108,7 @@ public class ProjectService {
         if (!project.isPresent()) {
             throw new NotFoundException("project not found!");
         }
-        project.get().setStatus(statusRepository.findByName(Constants.APPROVED));
+        project.get().setStatus(statusRepository.findByName(Constants.APPROVED).get());
         return projectRepository.save(project.get());
     }
 
@@ -117,18 +117,18 @@ public class ProjectService {
         if (!project.isPresent()) {
             throw new NotFoundException("project not found!");
         }
-        UserEntity userEntity = userRepository.findByEmail(email);
-        if(userEntity==null){
+        Optional<UserEntity> userEntity = userRepository.findByEmail(email);
+        if(!userEntity.isPresent()){
             throw new NotFoundException("User not found!");
         }
-        List<Project> projects = userEntity.getProjects();
+        List<Project> projects = userEntity.get().getProjects();
         if(!projects.contains(project.get())) {
             projects.add(project.get());
         }else {
             throw new BadRequestException("User is existed!");
         }
-        userEntity.setProjects(projects);
-        userRepository.save(userEntity);
+        userEntity.get().setProjects(projects);
+        userRepository.save(userEntity.get());
         return project.get();
     }
 
@@ -137,14 +137,14 @@ public class ProjectService {
         if (!project.isPresent()) {
             throw new NotFoundException("project not found!");
         }
-        UserEntity userEntity = userRepository.findByEmail(email);
-        if(userEntity==null){
+        Optional<UserEntity> userEntity = userRepository.findByEmail(email);
+        if(!userEntity.isPresent()){
             throw new NotFoundException("User not found!");
         }
-        List<Project> projects = userEntity.getProjects();
+        List<Project> projects = userEntity.get().getProjects();
         projects.remove(project.get());
-        userEntity.setProjects(projects);
-        userRepository.save(userEntity);
+        userEntity.get().setProjects(projects);
+        userRepository.save(userEntity.get());
         return project.get();
     }
 }
