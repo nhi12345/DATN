@@ -32,6 +32,8 @@ dependencies {
 	implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.6'
 
 	// https://mvnrepository.com/artifact/org.postgresql/postgresql
+	implementation("org.postgresql:postgresql")
+	
 	implementation 'mysql:mysql-connector-java'
 
 	implementation "com.google.api-client:google-api-client:1.22.0"
