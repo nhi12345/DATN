@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = "projects")
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Project {

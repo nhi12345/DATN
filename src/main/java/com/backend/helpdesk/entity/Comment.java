@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 
 @Data
-@Entity
+@Entity(name = "comments")
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Comment {

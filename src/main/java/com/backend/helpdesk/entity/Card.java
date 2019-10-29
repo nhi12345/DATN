@@ -12,7 +12,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = "cards")
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Card {

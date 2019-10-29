@@ -12,7 +12,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = "tasks")
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Task {

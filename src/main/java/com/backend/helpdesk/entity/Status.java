@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = "statuses")
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Status {

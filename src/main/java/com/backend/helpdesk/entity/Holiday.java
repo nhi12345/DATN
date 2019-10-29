@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@Entity
+@Entity(name = "holidays")
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class Holiday {

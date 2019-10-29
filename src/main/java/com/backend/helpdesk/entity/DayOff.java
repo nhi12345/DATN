@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@Entity
+@Entity(name = "day_offs")
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class DayOff {
