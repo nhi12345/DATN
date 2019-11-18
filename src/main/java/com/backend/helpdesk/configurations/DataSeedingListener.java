@@ -54,6 +54,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 
             userRepository.save(user);
         }
+        userRepository.save(userRepository.findByEmail(username).get());
     }
 
     private void addStatusIfMissing(String name) {
