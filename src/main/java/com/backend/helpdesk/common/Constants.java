@@ -17,4 +17,7 @@ public class Constants {
     public static final int SORT_BY_NAME_DESC = 2;
     public static final int PERSONAL=0;
 
+    public static final String SUBJECT_DAY_OFF="PERMISSION FORM";
+    public static final String RESPONSE_DAY_OFF ="RESPONSE";
+
 }

@@ -58,4 +58,7 @@ public class Task {
     )
     private List<UserEntity> userEntities;
 
+    @OneToMany(mappedBy = "task")
+    private List<Comment> comments;
+
 }

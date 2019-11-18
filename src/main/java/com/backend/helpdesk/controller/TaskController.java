@@ -46,6 +46,4 @@ public class TaskController {
     public TaskDTO addUserForTask(@PathVariable("id") int id, @RequestParam(value = "email", required = false) String email) {
         return taskService.addUserForTask(id, email);
     }
-
-
 }

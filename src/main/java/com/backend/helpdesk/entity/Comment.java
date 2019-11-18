@@ -27,4 +27,9 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_id")
+    private Task task;
 }
