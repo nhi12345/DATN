@@ -134,6 +134,8 @@ public class DayOffService {
             throw new NotFoundException("User not found!");
         }
         if (year == null) {
+            int b=dayOffRepository.findByUserEntity(userEntity.get()).size();
+            int a=0;
             return dayOffDayOffDTOConverter.convert(dayOffRepository.findByUserEntity(userEntity.get()));
         }
         List<DayOff> dayOffs = dayOffRepository.getDayOffByYear(year, id);

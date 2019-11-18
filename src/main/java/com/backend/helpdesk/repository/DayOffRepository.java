@@ -22,10 +22,10 @@ public interface DayOffRepository extends JpaRepository<DayOff,Integer> {
 
     List<DayOff> findByUserEntity(UserEntity userEntity);
 
-    @Query(value = "SELECT * FROM day_off where EXTRACT(YEAR FROM day_start_off) = ?1 and id_user=?2 and id_status=2",nativeQuery = true)
+    @Query(value = "SELECT * FROM day_offs where EXTRACT(YEAR FROM day_start_off) = ?1 and id_user=?2",nativeQuery = true)
     List<DayOff> getDayOffByYear(int year,int idUser);
 
-    @Query(value = "SELECT * FROM day_off where description like CONCAT('%', :content, '%') or day_start_off::::text like CONCAT('%', :content, '%') or day_end_off::::text like CONCAT('%', :content, '%')",nativeQuery = true)
+    @Query(value = "SELECT * FROM day_offs where description like CONCAT('%', :content, '%') or day_start_off::::text like CONCAT('%', :content, '%') or day_end_off::::text like CONCAT('%', :content, '%')",nativeQuery = true)
     List<DayOff> searchDayOff(@Param("content") String content,Pageable pageable);
 
 }
