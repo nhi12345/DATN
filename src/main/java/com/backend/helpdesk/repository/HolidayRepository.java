@@ -10,7 +10,7 @@ public interface HolidayRepository extends JpaRepository<Holiday,Integer> {
 
     Holiday findById(int id);
 
-    @Query(value = "SELECT * FROM holiday where day_start_off::::text like CONCAT('%', ?1, '%')",nativeQuery = true)
+    @Query(value = "SELECT * FROM holidays where day_start_off::::text like CONCAT('%', ?1, '%')",nativeQuery = true)
     List<Holiday> findHolidayByYear(int year);
 
 }
