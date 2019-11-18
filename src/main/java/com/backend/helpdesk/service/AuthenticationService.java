@@ -47,6 +47,7 @@ public class AuthenticationService {
     public String getEmailFromTokenUser(String tokenGoogle) throws IOException, GeneralSecurityException {
 
         GoogleIdToken idToken = GoogleIdToken.parse(jsonFactory, tokenGoogle);
+        int a=0;
         if (idToken != null) {
             GoogleIdToken.Payload payload = idToken.getPayload();
 
@@ -55,6 +56,7 @@ public class AuthenticationService {
             checkForUserRegister(email,
                     (String) payload.get("family_name"),
                     (String) payload.get("given_name"));
+            int b=0;
             return email;
         }
         return null;
@@ -70,6 +72,7 @@ public class AuthenticationService {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = jwtTokenUtil.generateToken(authentication);
+        int c=0;
         return ResponseEntity.ok(new Token(token));
     }
 
