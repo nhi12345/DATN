@@ -16,6 +16,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 
 @Component
@@ -42,7 +44,8 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
         if (!userRepository.findByEmail(username).isPresent()) {
             UserEntity user = new UserEntity(username, new BCryptPasswordEncoder().encode(password), "f", "l");
             user.setRoleEntities(new HashSet<>());
-
+            Date date= Calendar.getInstance().getTime();
+            user.setStartingDay(date);
             for (String role : roles) {
                 user.getRoleEntities().add(roleRepository.findByName(role).get());
             }

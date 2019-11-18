@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -96,6 +98,8 @@ public class AuthenticationService {
         userEntity.setPassword(new BCryptPasswordEncoder().encode(email));
         userEntity.setFirstName(firstName);
         userEntity.setLastName(lastName);
+        Date date= Calendar.getInstance().getTime();
+        userEntity.setStartingDay(date);
 
         // set role default
         RoleEntity roleEntity = roleRepository.findByName("ROLE_EMPLOYEES").get();
