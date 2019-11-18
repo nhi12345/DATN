@@ -51,7 +51,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             user.setRoleEntities(new HashSet<>());
 
             for (String role : roles) {
-                user.getRoleEntities().add(roleRepository.findByName(role));
+                user.getRoleEntities().add(roleRepository.findByName(role).get());
             }
 
             userRepository.save(user);
