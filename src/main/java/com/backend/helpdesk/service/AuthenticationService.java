@@ -68,7 +68,6 @@ public class AuthenticationService {
                         email
                 )
         );
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = jwtTokenUtil.generateToken(authentication);
         return ResponseEntity.ok(new Token(token));

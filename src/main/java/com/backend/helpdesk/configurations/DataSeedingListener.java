@@ -62,14 +62,17 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
         addRoleIfMissing("ROLE_ADMIN");
-        addRoleIfMissing("ROLE_MANAGE");
         addRoleIfMissing("ROLE_EMPLOYEES");
+        addRoleIfMissing("ROLE_SECRETARY");
 
-        addStatusIfMissing("PENDING");
+        addUserIfMissing("lunachris1208@gmail.com", "lunachris1208@gmail.com", "ROLE_ADMIN");
+//        addUserIfMissing("bkdn.ntdat@gmail.com", "bkdn.ntdat@gmail.com", "ROLE_EMPLOYEES");
+//        addUserIfMissing("abc@gmail.com", "abc@gmail.com", "ROLE_SECRETARY");
+
         addStatusIfMissing("APPROVED");
+        addStatusIfMissing("PENDING");
         addStatusIfMissing("REJECTED");
-
-        addUserIfMissing("minhhuynh@novahub.vn", "minhhuynh@novahub.vn", "ROLE_EMPLOYEES", "ROLE_ADMIN", "ROLE_MANAGE");
+//        addUserIfMissing("minhhuynh@novahub.vn", "minhhuynh@novahub.vn", "ROLE_EMPLOYEES", "ROLE_ADMIN", "ROLE_MANAGE");
         if (signingKey == null || signingKey.length() == 0) {
             String jws = Jwts.builder()
                     .setSubject("HelpDesk")
