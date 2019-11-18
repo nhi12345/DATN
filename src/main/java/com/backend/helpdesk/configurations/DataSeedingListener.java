@@ -41,20 +41,17 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
         }
     }
     private void addUserIfMissing(String username, String password, String... roles) {
-        Date date= Calendar.getInstance().getTime();
-        userRepository.findByEmail(username).get().setStartingDay(date);
-        if (!userRepository.findByEmail(username).isPresent()) {
+        if (userRepository.findByEmail(username).isPresent()) {
             UserEntity user = new UserEntity(username, new BCryptPasswordEncoder().encode(password), "f", "l");
             user.setRoleEntities(new HashSet<>());
-//            Date date= Calendar.getInstance().getTime();
-//            user.setStartingDay(date);
+            Date date= Calendar.getInstance().getTime();
+            user.setStartingDay(date);
             for (String role : roles) {
                 user.getRoleEntities().add(roleRepository.findByName(role).get());
             }
 
             userRepository.save(user);
         }
-        userRepository.save(userRepository.findByEmail(username).get());
     }
 
     private void addStatusIfMissing(String name) {
