@@ -34,20 +34,13 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
 
 
     private void addRoleIfMissing(String name) {
-        if (roleRepository.findByName(name) == null) {
+        if (!roleRepository.findByName(name).isPresent()) {
             roleRepository.save(new RoleEntity(name));
         }
     }
-
-    private void addStatusIfMissing(String name) {
-        if (statusRepository.findByName(name) == null) {
-            statusRepository.save(new Status(name));
-        }
-    }
-
-    private void addUserIfMissing(String email, String password, String... roles) {
-        if (userRepository.findByEmail(email) == null) {
-            UserEntity user = new UserEntity(email, new BCryptPasswordEncoder().encode(password), "firstName", "lastName");
+    private void addUserIfMissing(String username, String password, String... roles) {
+        if (!userRepository.findByEmail(username).isPresent()) {
+            UserEntity user = new UserEntity(username, new BCryptPasswordEncoder().encode(password), "f", "l");
             user.setRoleEntities(new HashSet<>());
 
             for (String role : roles) {
@@ -58,12 +51,18 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
         }
     }
 
+    private void addStatusIfMissing(String name) {
+        if (!statusRepository.findByName(name).isPresent()) {
+            statusRepository.save(new Status(name));
+        }
+    }
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
         addRoleIfMissing("ROLE_ADMIN");
         addRoleIfMissing("ROLE_EMPLOYEES");
-        addRoleIfMissing("ROLE_SECRETARY");
+        addRoleIfMissing("ROLE_MANAGE");
 
         addUserIfMissing("lunachris1208@gmail.com", "lunachris1208@gmail.com", "ROLE_ADMIN");
 //        addUserIfMissing("bkdn.ntdat@gmail.com", "bkdn.ntdat@gmail.com", "ROLE_EMPLOYEES");
