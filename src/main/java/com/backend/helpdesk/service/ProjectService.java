@@ -52,6 +52,14 @@ public class ProjectService {
         return projectToProjectDTOConvert.convert(projectRepository.findByStatus(status.get()));
     }
 
+    public List<ProjectDTO> getProjectsByUser(int id){
+        Optional<UserEntity> userEntity=userRepository.findById(id);
+        if(!userEntity.isPresent()){
+            throw new NotFoundException("User not found!");
+        }
+        return projectToProjectDTOConvert.convert(userEntity.get().getProjects());
+    }
+
     public ProjectDTO getProjectById(int id){
         Optional<Project> project = projectRepository.findById(id);
         if (!project.isPresent()) {

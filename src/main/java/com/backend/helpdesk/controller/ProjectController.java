@@ -23,6 +23,12 @@ public class ProjectController {
         return projectService.getAllProject();
     }
 
+    @Secured("ROLE_EMPLOYEES")
+    @GetMapping("/user/{id}")
+    public List<ProjectDTO> getProjectsByUser(@PathVariable("id") int id) {
+        return projectService.getProjectsByUser(id);
+    }
+
     @Secured("ROLE_MANAGE")
     @GetMapping("/{id}")
     public ProjectDTO getProjectById(@PathVariable("id") int id) {
