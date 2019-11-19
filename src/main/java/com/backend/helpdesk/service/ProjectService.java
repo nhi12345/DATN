@@ -76,7 +76,7 @@ public class ProjectService {
         projectDTO.setStatus(Constants.PENDING);
         Project project = projectDTOToProjectConvert.convert(projectDTO);
         UserEntity userEntity=userRepository.findById(userService.getUserId()).get();
-        List<Project> projects=new ArrayList<>();
+        List<Project> projects=userEntity.getProjects();
         projects.add(project);
         userEntity.setProjects(projects);
         projectRepository.save(project);
