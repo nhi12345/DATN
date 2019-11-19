@@ -48,7 +48,7 @@ public class ProjectController {
     }
 
     @Secured("ROLE_ADMIN")
-    @PostMapping("/{id}")
+    @PutMapping("/accept/{id}")
     public Project acceptProject(@PathVariable("id") int id) {
         return projectService.acceptProject(id);
     }

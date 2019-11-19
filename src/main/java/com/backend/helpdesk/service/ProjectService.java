@@ -71,7 +71,7 @@ public class ProjectService {
         List<Project> projects=new ArrayList<>();
         projects.add(project);
         userEntity.setProjects(projects);
-        userRepository.save(userEntity);
+//        userRepository.save(userEntity);
         return projectRepository.save(project);
     }
 
