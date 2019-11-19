@@ -1,5 +1,7 @@
 package com.backend.helpdesk.service;
 
+import com.backend.helpdesk.DTO.UserDTO;
+import com.backend.helpdesk.converter.Converter;
 import com.backend.helpdesk.entity.UserEntity;
 import com.backend.helpdesk.exception.UserException.UserNotFoundException;
 import com.backend.helpdesk.repository.UserRepository;
@@ -11,13 +13,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
     @Autowired
+    private Converter<UserEntity, UserDTO> userEntityUserDTOConverter;
+
+    @Autowired
     UserRepository userRepository;
+
     public void setStatusEnableOfUser(int idUser, boolean status) {
         Optional<UserEntity> userEntityOpt = userRepository.findById(idUser);
         if (!userEntityOpt.isPresent()) {
@@ -34,5 +41,10 @@ public class UserService {
         UserEntity userEntity = userRepository.findByEmail(email).get();
         return userEntity.getId();
     }
+
+    public List<UserDTO> getAllUser() {
+        return userEntityUserDTOConverter.convert(userRepository.findAll());
+    }
+
 
 }
