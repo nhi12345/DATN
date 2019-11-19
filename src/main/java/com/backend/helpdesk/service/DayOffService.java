@@ -158,9 +158,10 @@ public class DayOffService {
     }
 
     public DayOff addDayOff(DayOffDTO dayOffDTO) {
-        //number of day off register in request
+        //number of day off register in requestConverter
+        ZoneId vietnam = ZoneId.of("Asia/Ho_Chi_Minh");
         float numberOfDayOff = commonMethods.calculateDaysBetweenTwoDate(dayOffDTO.getDayStartOff(), dayOffDTO.getDayEndOff());
-        LocalDate localDateStart = dayOffDTO.getDayStartOff().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate localDateStart = dayOffDTO.getDayStartOff().toInstant().atZone(vietnam).toLocalDate();
         int yearStart = localDateStart.getYear();
 
         //number of day off remaining this year
@@ -168,15 +169,11 @@ public class DayOffService {
         if (numberOfDayOff > numberOfDayOffRemainingThisYear) {
             throw new BadRequestException("The number of days left is not enough!");
         }
-        LocalDate localDateEnd = dayOffDTO.getDayStartOff().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        LocalDate localDateEnd = dayOffDTO.getDayStartOff().toInstant().atZone(vietnam).toLocalDate();
         int yearEnd = localDateStart.getYear();
         if (yearStart != yearEnd && yearEnd != Calendar.getInstance().get(Calendar.YEAR)) {
             throw new BadRequestException("Please register day off this year!");
-        }
-        long dayStart = dayOffDTO.getDayStartOff().getTime();
-        long dayEnd = dayOffDTO.getDayEndOff().getTime();
-        if (dayStart > dayEnd) {
-            throw new BadRequestException("Incorrect information");
         }
 
         Optional<DayOffType> dayOffType = dayOffTypeRepository.findById(dayOffDTO.getDayOffType().getId());
@@ -188,10 +185,18 @@ public class DayOffService {
         calStart.setTime(dayOffDTO.getDayStartOff());
         Calendar calEnd = Calendar.getInstance();
         calEnd.setTime(dayOffDTO.getDayEndOff());
-        if (!((calStart.get(Calendar.HOUR) == 8 && calStart.get(Calendar.HOUR) == 12) || (calEnd.get(Calendar.HOUR) == 12 && calEnd.get(Calendar.HOUR) == 18))) {
+        if (!((calStart.get(Calendar.HOUR_OF_DAY) == 8 || calStart.get(Calendar.HOUR_OF_DAY) == 12) && (calEnd.get(Calendar.HOUR_OF_DAY) == 12 || calEnd.get(Calendar.HOUR_OF_DAY) == 18))) {
             throw new BadRequestException("Wrong time format");
         }
+
+        long dayStart = dayOffDTO.getDayStartOff().getTime();
+        long dayEnd = dayOffDTO.getDayEndOff().getTime();
+        if (dayStart > dayEnd) {
+            throw new BadRequestException("Incorrect information");
+        }
+
         Date date = new Date(System.currentTimeMillis());
+        Calendar createdAt = Calendar.getInstance();
         dayOffDTO.setUserEntity(userEntityUserDTOConverter.convert(userRepository.findById(getUserId()).get()));
         dayOffDTO.setCreateAt(date);
         dayOffDTO.setStatus(statusStatusDTOConverter.convert(statusRepository.findByName(Constants.PENDING).get()));
