@@ -10,7 +10,6 @@ public class CardDTO {
 
     private int id;
 
-    @NotBlank
     private String name;
 
     private Calendar createAt;
