@@ -20,6 +20,11 @@ public class UserController {
         return userService.getAllUser();
     }
 
+    @GetMapping("/is_manage/{id}")
+    public boolean isManage(@PathVariable("id") int id){
+        return userService.isManage(id);
+    }
+
     @Secured("ROLE_ADMIN")
     @PutMapping("/enable")
     public void enableUser(@RequestParam int idUser) {
