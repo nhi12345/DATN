@@ -1,6 +1,7 @@
 package com.backend.helpdesk.controller;
 
 import com.backend.helpdesk.DTO.UserDTO;
+import com.backend.helpdesk.common.Constants;
 import com.backend.helpdesk.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -22,6 +23,9 @@ public class UserController {
 
     @GetMapping("/is_manage/{id}")
     public boolean isManage(@PathVariable("id") int id){
+        if(id== Constants.PERSONAL){
+            id=userService.getUserId();
+        }
         return userService.isManage(id);
     }
 
