@@ -10,7 +10,7 @@ public class CardDTO {
 
     private int id;
 
-    private String nameCard;
+    private String name;
 
     private Calendar createAt;
 

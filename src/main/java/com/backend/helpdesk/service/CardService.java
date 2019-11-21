@@ -56,7 +56,7 @@ public class CardService {
         if(!project.isPresent()){
             throw new NotFoundException("Project not found");
         }
-        Optional<Card> card1=cardRepository.findByNameCard(cardDTO.getNameCard());
+        Optional<Card> card1=cardRepository.findByName(cardDTO.getName());
         if(card1.isPresent()){
             throw new BadRequestException("Card is existed");
         }
@@ -74,7 +74,7 @@ public class CardService {
         if (!card.isPresent()) {
             throw new NotFoundException("card not found!");
         }
-        Optional<Card> card1=cardRepository.findByNameCard(cardDTO.getNameCard());
+        Optional<Card> card1=cardRepository.findByName(cardDTO.getName());
         if(card1.isPresent()){
             throw new BadRequestException("Card is existed");
         }
@@ -86,7 +86,7 @@ public class CardService {
         }
         Calendar calendar=Calendar.getInstance();
         card.get().setUpdateAt(calendar);
-        card.get().setNameCard(cardDTO.getNameCard());
+        card.get().setName(cardDTO.getName());
         return card.get();
     }
 
