@@ -22,7 +22,8 @@ public class Card {
 
     @JsonAlias("name")
     @Column(nullable = false)
-    private String name;
+    @NonNull
+    private String nameCard;
 
     @JsonAlias("create_at")
     @Column(nullable = false)

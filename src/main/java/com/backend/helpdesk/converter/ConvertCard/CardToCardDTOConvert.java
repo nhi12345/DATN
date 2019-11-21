@@ -11,7 +11,7 @@ public class CardToCardDTOConvert extends Converter<Card, CardDTO> {
     public CardDTO convert(Card source) {
         CardDTO cardDTO = new CardDTO();
         cardDTO.setId(source.getId());
-        cardDTO.setName(source.getName());
+        cardDTO.setNameCard(source.getNameCard());
         cardDTO.setCreateAt(source.getCreateAt());
         cardDTO.setUpdateAt(source.getUpdateAt());
         cardDTO.setIdUserCreate(source.getUserCreate().getId());

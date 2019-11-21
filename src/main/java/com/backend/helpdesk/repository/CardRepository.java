@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CardRepository extends JpaRepository<Card,Integer> {
-    Optional<Card> findByName(String name);
+    Optional<Card> findByNameCard(String name);
 
     List<Card> findByProject(Project project);
 }
