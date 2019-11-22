@@ -76,11 +76,8 @@ public class ProjectService {
         projectDTO.setStatus(Constants.PENDING);
         Project project = projectDTOToProjectConvert.convert(projectDTO);
         UserEntity userEntity=userRepository.findById(userService.getUserId()).get();
-        List<Project> projects=userEntity.getProjects();
-        projects.add(project);
-        userEntity.setProjects(projects);
         projectRepository.save(project);
-        userRepository.save(userEntity);
+        userEntity.getProjects().add(project);
         return project;
     }
 
@@ -135,10 +132,10 @@ public class ProjectService {
         if(projects.contains(project.get())) {
             throw new BadRequestException("User is existed!");
         }else {
-            projects.add(project.get());
+            userEntity.get().getProjects().add(project.get());
         }
-        userEntity.get().setProjects(projects);
-        userRepository.save(userEntity.get());
+//        userEntity.get().setProjects(projects);
+//        userRepository.save(userEntity.get());
         return project.get();
     }
 
