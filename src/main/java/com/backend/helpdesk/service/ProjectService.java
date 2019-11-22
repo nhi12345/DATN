@@ -78,6 +78,7 @@ public class ProjectService {
         UserEntity userEntity=userRepository.findById(userService.getUserId()).get();
         projectRepository.save(project);
         userEntity.getProjects().add(project);
+        userRepository.save(userEntity);
         return project;
     }
 
@@ -135,7 +136,7 @@ public class ProjectService {
             userEntity.get().getProjects().add(project.get());
         }
 //        userEntity.get().setProjects(projects);
-//        userRepository.save(userEntity.get());
+        userRepository.save(userEntity.get());
         return project.get();
     }
 
