@@ -82,7 +82,6 @@ public class ProjectService {
         return project;
     }
 
-
     public Project editProject(int id, ProjectDTO projectDTO) {
         Optional<Project> project = projectRepository.findById(id);
         if (!project.isPresent()) {
