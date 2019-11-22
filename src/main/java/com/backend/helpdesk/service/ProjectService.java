@@ -132,10 +132,10 @@ public class ProjectService {
             throw new NotFoundException("User not found!");
         }
         List<Project> projects = userEntity.get().getProjects();
-        if(!projects.contains(project.get())) {
-            projects.add(project.get());
-        }else {
+        if(projects.contains(project.get())) {
             throw new BadRequestException("User is existed!");
+        }else {
+            projects.add(project.get());
         }
         userEntity.get().setProjects(projects);
         userRepository.save(userEntity.get());
