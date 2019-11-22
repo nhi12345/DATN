@@ -81,9 +81,9 @@ public class ProjectService {
         userEntity.setProjects(projects);
         projectRepository.save(project);
         userRepository.save(userEntity);
-        //hiih
         return project;
     }
+
 
     public Project editProject(int id, ProjectDTO projectDTO) {
         Optional<Project> project = projectRepository.findById(id);
