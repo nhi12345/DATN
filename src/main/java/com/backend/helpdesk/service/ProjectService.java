@@ -57,6 +57,8 @@ public class ProjectService {
         if(!userEntity.isPresent()){
             throw new NotFoundException("User not found!");
         }
+        int a=userEntity.get().getProjects().size();
+        int c=0;
         return projectToProjectDTOConvert.convert(userEntity.get().getProjects());
     }
 

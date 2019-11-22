@@ -3,8 +3,10 @@ package com.backend.helpdesk.service;
 import com.backend.helpdesk.DTO.UserDTO;
 import com.backend.helpdesk.common.Constants;
 import com.backend.helpdesk.converter.Converter;
+import com.backend.helpdesk.entity.Project;
 import com.backend.helpdesk.entity.UserEntity;
 import com.backend.helpdesk.exception.UserException.UserNotFoundException;
+import com.backend.helpdesk.repository.ProjectRepository;
 import com.backend.helpdesk.repository.RoleRepository;
 import com.backend.helpdesk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class UserService {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    ProjectRepository projectRepository;
 
     public void setStatusEnableOfUser(int idUser, boolean status) {
         Optional<UserEntity> userEntityOpt = userRepository.findById(idUser);
@@ -71,6 +76,11 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    public List<UserDTO> getUsers(int id){
+        Project project=projectRepository.findById(id).get();
+        return userEntityUserDTOConverter.convert(project.getUserEntities());
     }
 
 }

@@ -2,6 +2,7 @@ package com.backend.helpdesk.controller;
 
 import com.backend.helpdesk.DTO.UserDTO;
 import com.backend.helpdesk.common.Constants;
+import com.backend.helpdesk.entity.UserEntity;
 import com.backend.helpdesk.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -39,6 +40,12 @@ public class UserController {
     @PutMapping("/disable")
     public void disableUser(@RequestParam int idUser) {
         userService.setStatusEnableOfUser(idUser, false);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/project/{id}")
+    public List<UserDTO> getUser(@PathVariable("id") int id){
+        return userService.getUsers(id);
     }
 
 }

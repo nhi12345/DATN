@@ -54,4 +54,7 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private List<Card> cards;
 
+    @ManyToMany(mappedBy = "projects")
+    private List<UserEntity> userEntities;
+
 }

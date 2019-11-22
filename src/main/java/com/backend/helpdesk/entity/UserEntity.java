@@ -56,7 +56,7 @@ public class UserEntity {
     )
     private Set<RoleEntity> roleEntities;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_project",
             joinColumns = @JoinColumn(name = "user_id"),

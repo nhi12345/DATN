@@ -1,5 +1,6 @@
 package com.backend.helpdesk.repository;
 
+import com.backend.helpdesk.entity.Project;
 import com.backend.helpdesk.entity.UserEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,4 +32,13 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer>{
             nativeQuery = true
     )
     List<UserEntity> findAllUserByKeywordFollowPageable(@Param("keyword") String keyword, Pageable pageable);
+
+    List<UserEntity> findByProjects(Project project);
+
+//    @Query(
+//            value = "SELECT * FROM user_project where project_id=?1)",
+//            nativeQuery = true
+//    )
+//    List<UserEntity> findByProject(int id);
+
 }
