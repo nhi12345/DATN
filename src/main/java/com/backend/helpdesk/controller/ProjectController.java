@@ -56,7 +56,7 @@ public class ProjectController {
     }
 
     @Secured("ROLE_MANAGE")
-    @DeleteMapping("/{id}")
+    @PutMapping("/reject/{id}")
     public ProjectDTO deleteProject(@PathVariable("id") int id) {
         return projectService.deleteProject(id);
     }
