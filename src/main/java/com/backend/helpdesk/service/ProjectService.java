@@ -121,7 +121,7 @@ public class ProjectService {
         return projectRepository.save(project.get());
     }
 
-    public Project addUserForProject(int id, String email) {
+    public ProjectDTO addUserForProject(int id, String email) {
         Optional<Project> project = projectRepository.findById(id);
         if (!project.isPresent()) {
             throw new NotFoundException("project not found!");
@@ -138,22 +138,27 @@ public class ProjectService {
         }
 //        userEntity.get().setProjects(projects);
         userRepository.save(userEntity.get());
-        return project.get();
+        return projectToProjectDTOConvert.convert(project.get());
     }
 
-    public Project removeUserInProject(int id, String email){
+    public ProjectDTO removeUserInProject(int id, String email) {
         Optional<Project> project = projectRepository.findById(id);
         if (!project.isPresent()) {
             throw new NotFoundException("project not found!");
         }
         Optional<UserEntity> userEntity = userRepository.findByEmail(email);
-        if(!userEntity.isPresent()){
+        if (!userEntity.isPresent()) {
             throw new NotFoundException("User not found!");
         }
         List<Project> projects = userEntity.get().getProjects();
-        projects.remove(project.get());
-        userEntity.get().setProjects(projects);
+        if (projects.contains(project.get())) {
+            userEntity.get().getProjects().remove(project.get());
+        } else {
+            throw new BadRequestException("User isn't existed!");
+        }
         userRepository.save(userEntity.get());
-        return project.get();
+        return projectToProjectDTOConvert.convert(project.get());
     }
+
 }
+
