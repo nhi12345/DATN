@@ -48,8 +48,8 @@ public class ProjectService {
     private UserService userService;
 
     public List<ProjectDTO> getAllProject() {
-        Optional<Status> status = statusRepository.findByName(Constants.APPROVED);
-        return projectToProjectDTOConvert.convert(projectRepository.findByStatus(status.get()));
+//        Optional<Status> status = statusRepository.findByName(Constants.APPROVED);
+        return projectToProjectDTOConvert.convert(projectRepository.findAll());
     }
 
     public List<ProjectDTO> getProjectsByUser(int id){
