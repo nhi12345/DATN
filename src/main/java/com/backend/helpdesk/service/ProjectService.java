@@ -74,9 +74,10 @@ public class ProjectService {
         Calendar calendar = Calendar.getInstance();
         projectDTO.setCreateAt(calendar);
         projectDTO.setUpdateAt(calendar);
-        projectDTO.setUserIdCreate(userService.getUserId());
+//        projectDTO.setUserIdCreate(userService.getUserId());
         projectDTO.setStatus(Constants.PENDING);
         Project project = projectDTOToProjectConvert.convert(projectDTO);
+        project.setUserCreate(userRepository.findById(userService.getUserId()).get());
         UserEntity userEntity=userRepository.findById(userService.getUserId()).get();
         projectRepository.save(project);
         userEntity.getProjects().add(project);
