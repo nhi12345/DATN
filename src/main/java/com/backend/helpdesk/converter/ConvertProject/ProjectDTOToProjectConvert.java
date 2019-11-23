@@ -1,6 +1,7 @@
 package com.backend.helpdesk.converter.ConvertProject;
 
 import com.backend.helpdesk.DTO.ProjectDTO;
+import com.backend.helpdesk.DTO.UserDTO;
 import com.backend.helpdesk.converter.Converter;
 import com.backend.helpdesk.entity.Project;
 import com.backend.helpdesk.entity.Status;
@@ -19,6 +20,9 @@ public class ProjectDTOToProjectConvert extends Converter<ProjectDTO, Project> {
     @Autowired
     private StatusRepository statusRepository;
 
+    @Autowired
+    private Converter<UserDTO,UserEntity> userDTOUserEntityConverter;
+
     @Override
     public Project convert(ProjectDTO source) {
         Project project = new Project();
@@ -27,7 +31,7 @@ public class ProjectDTOToProjectConvert extends Converter<ProjectDTO, Project> {
         project.setDescription(source.getDescription());
         project.setCreateAt(source.getCreateAt());
         project.setUpdateAt(source.getUpdateAt());
-        project.setUserCreate(userRepository.findById(source.getUserIdCreate()).get());
+        project.setUserCreate(userDTOUserEntityConverter.convert(source.getUserCreate()));
         project.setStatus(statusRepository.findByName(source.getStatus()).get());
         return project;
     }

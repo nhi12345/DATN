@@ -70,7 +70,7 @@ public class ProjectService {
         return projectToProjectDTOConvert.convert(project.get());
     }
 //huhuh
-    public Project addProject(ProjectDTO projectDTO) {
+    public ProjectDTO addProject(ProjectDTO projectDTO) {
         Calendar calendar = Calendar.getInstance();
         projectDTO.setCreateAt(calendar);
         projectDTO.setUpdateAt(calendar);
@@ -81,7 +81,7 @@ public class ProjectService {
         projectRepository.save(project);
         userEntity.getProjects().add(project);
         userRepository.save(userEntity);
-        return project;
+        return projectToProjectDTOConvert.convert(project);
     }
 
     public Project editProject(int id, ProjectDTO projectDTO) {
@@ -103,22 +103,22 @@ public class ProjectService {
         return projectRepository.save(project.get());
     }
 
-    public Project deleteProject(int id) {
+    public ProjectDTO deleteProject(int id) {
         Optional<Project> project = projectRepository.findById(id);
         if (!project.isPresent()) {
             throw new NotFoundException("project not found!");
         }
         project.get().setStatus(statusRepository.findByName(Constants.REJECTED).get());
-        return projectRepository.save(project.get());
+        return projectToProjectDTOConvert.convert(projectRepository.save(project.get()));
     }
 
-    public Project acceptProject(int id) {
+    public ProjectDTO acceptProject(int id) {
         Optional<Project> project = projectRepository.findById(id);
         if (!project.isPresent()) {
             throw new NotFoundException("project not found!");
         }
         project.get().setStatus(statusRepository.findByName(Constants.APPROVED).get());
-        return projectRepository.save(project.get());
+        return projectToProjectDTOConvert.convert(projectRepository.save(project.get()));
     }
 
     public ProjectDTO addUserForProject(int id, String email) {

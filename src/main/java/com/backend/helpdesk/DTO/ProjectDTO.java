@@ -18,7 +18,7 @@ public class ProjectDTO {
 
     private Calendar updateAt;
 
-    private int userIdCreate;
+    private UserDTO userCreate;
 
     private String status;
 }

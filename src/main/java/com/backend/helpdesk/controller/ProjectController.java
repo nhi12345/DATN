@@ -45,7 +45,7 @@ public class ProjectController {
 
     @Secured("ROLE_MANAGE")
     @PostMapping
-    public Project addProject(@Valid @RequestBody ProjectDTO projectDTO) {
+    public ProjectDTO addProject(@Valid @RequestBody ProjectDTO projectDTO) {
         return projectService.addProject(projectDTO);
     }
 
@@ -57,13 +57,13 @@ public class ProjectController {
 
     @Secured("ROLE_MANAGE")
     @DeleteMapping("/{id}")
-    public Project deleteProject(@PathVariable("id") int id) {
+    public ProjectDTO deleteProject(@PathVariable("id") int id) {
         return projectService.deleteProject(id);
     }
 
     @Secured("ROLE_ADMIN")
     @PutMapping("/accept/{id}")
-    public Project acceptProject(@PathVariable("id") int id) {
+    public ProjectDTO acceptProject(@PathVariable("id") int id) {
         return projectService.acceptProject(id);
     }
 
