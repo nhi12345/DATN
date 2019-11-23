@@ -110,4 +110,25 @@ public class TaskService {
         return taskToTaskDTOConvert.convert(task.get());
     }
 
+    public TaskDTO replaceTask(int idOldCard,int idNewCard,int idTask){
+        Optional<Task> task=taskRepository.findById(idTask);
+        if(!task.isPresent()){
+            throw new NotFoundException("Task not found");
+        }
+        Optional<Card> oldCard=cardRepository.findById(idOldCard);
+        if(!oldCard.isPresent()){
+            throw new NotFoundException("Card old not found!");
+        }
+        Optional<Card> newCard=cardRepository.findById(idNewCard);
+        if(!newCard.isPresent()){
+            throw new NotFoundException("Card new not found!");
+        }
+        oldCard.get().getTasks().remove(task.get());
+        cardRepository.save(oldCard.get());
+        newCard.get().getTasks().add(task.get());
+        cardRepository.save(newCard.get());
+        task.get().setCard(newCard.get());
+        return taskToTaskDTOConvert.convert(taskRepository.save(task.get()));
+    }
+
 }

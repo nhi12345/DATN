@@ -46,4 +46,10 @@ public class TaskController {
     public TaskDTO addUserForTask(@PathVariable("id") int id, @RequestParam(value = "email", required = false) String email) {
         return taskService.addUserForTask(id, email);
     }
+
+    @Secured("ROLE_MANAGE")
+    @PutMapping("/replace_task/{idOld}/new_task/{idNew}/task/{id}")
+    public TaskDTO replaceTask(@PathVariable("idOld") int idOldCard,@PathVariable("idNew") int idNewCard,@PathVariable("id") int idTask){
+        return taskService.replaceTask(idOldCard,idNewCard,idTask);
+    }
 }
