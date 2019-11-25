@@ -47,4 +47,10 @@ public class JobController {
         return jobService.removeJob(id);
     }
 
+    @Secured("ROLE_EMPLOYEES")
+    @GetMapping("/process/{id}")
+    public int getProcess(@PathVariable("id") int id){
+        return jobService.geProcess(id);
+    }
+
 }

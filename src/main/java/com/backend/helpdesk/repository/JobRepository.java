@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface JobRepository extends JpaRepository<Job,Integer> {
     List<Job> findByTask(Task task);
+    List<Job> findByStatusAndTask(String status,Task task);
 }

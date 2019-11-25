@@ -100,4 +100,18 @@ public class JobService {
         jobRepository.save(job.get());
         return jobJobDTOConverter.convert(job.get());
     }
+
+    public int geProcess(int id){
+        Optional<Task> task=taskRepository.findById(id);
+        if(!task.isPresent()){
+            throw new NotFoundException("Task not found!");
+        }
+        int result=0;
+        int jobApproved=jobRepository.findByStatusAndTask(Constants.APPROVED,task.get()).size();
+        int jobSum=jobRepository.findByTask(task.get()).size();
+        if(jobSum!=0){
+            result=jobApproved/jobSum;
+        }
+        return result;
+    }
 }
