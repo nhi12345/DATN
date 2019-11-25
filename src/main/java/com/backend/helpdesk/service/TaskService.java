@@ -41,6 +41,14 @@ public class TaskService {
     @Autowired
     private UserRepository userRepository;
 
+    public TaskDTO getTask(int id){
+        Optional<Task> task = taskRepository.findById(id);
+        if (!task.isPresent()) {
+            throw new NotFoundException("Task not found!");
+        }
+        return taskToTaskDTOConvert.convert(task.get());
+    }
+
     public List<TaskDTO> getAllTaskByCard(int id) {
         Optional<Card> card = cardRepository.findById(id);
         if (!card.isPresent()) {

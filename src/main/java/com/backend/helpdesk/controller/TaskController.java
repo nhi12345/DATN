@@ -18,6 +18,12 @@ public class TaskController {
     private TaskService taskService;
 
     @Secured("ROLE_EMPLOYEES")
+    @GetMapping("/{id}")
+    public TaskDTO getTask(@PathVariable("id") int id) {
+        return taskService.getTask(id);
+    }
+
+    @Secured("ROLE_EMPLOYEES")
     @GetMapping("/card/{id}")
     public List<TaskDTO> getAllTaskByCard(@PathVariable("id") int id) {
         return taskService.getAllTaskByCard(id);
