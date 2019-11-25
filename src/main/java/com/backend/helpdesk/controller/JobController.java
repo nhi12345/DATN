@@ -36,9 +36,9 @@ public class JobController {
     }
 
     @Secured("ROLE_EMPLOYEES")
-    @PutMapping("accept/{id}")
+    @PutMapping("change_status/{id}")
     public JobDTO acceptJob(@PathVariable("id") int id){
-        return jobService.acceptJob(id);
+        return jobService.changeJob(id);
     }
 
     @Secured("ROLE_EMPLOYEES")

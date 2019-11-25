@@ -76,12 +76,17 @@ public class JobService {
         jobRepository.delete(job.get());
     }
 
-    public JobDTO acceptJob(int id){
+    public JobDTO changeJob(int id){
         Optional<Job> job=jobRepository.findById(id);
         if(!job.isPresent()){
             throw new NotFoundException("Job not found");
         }
-        job.get().setStatus(Constants.APPROVED);
+        String status=job.get().getStatus();
+        if(status.equals(Constants.PENDING)){
+            job.get().setStatus(Constants.APPROVED);
+        }else {
+            job.get().setStatus(Constants.PENDING);
+        }
         jobRepository.save(job.get());
         return jobJobDTOConverter.convert(job.get());
     }
