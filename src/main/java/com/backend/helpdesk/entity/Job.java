@@ -9,26 +9,25 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Calendar;
-import java.util.List;
 
 @Data
-@Entity(name = "tasks")
+@Entity(name = "jobs")
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Task {
+public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @JsonAlias("name")
+    @JsonAlias("content")
     @Column(nullable = false)
     @NonNull
-    private String name;
+    private String content;
 
-    @JsonAlias("description")
+    @JsonAlias("status")
     @Column(nullable = false)
     @NonNull
-    private String description;
+    private String status;
 
     @JsonAlias("create_at")
     @Column(nullable = false)
@@ -47,21 +46,6 @@ public class Task {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "card_id")
-    private Card card;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "task_user",
-            joinColumns = @JoinColumn(name = "task_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<UserEntity> userEntities;
-
-    @OneToMany(mappedBy = "task")
-    private List<Comment> comments;
-
-    @OneToMany(mappedBy = "task")
-    private List<Job> jobs;
-
+    @JoinColumn(name = "task_id")
+    private Task task;
 }
