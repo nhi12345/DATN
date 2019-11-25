@@ -1,10 +1,13 @@
 package com.backend.helpdesk.service;
 
 import com.backend.helpdesk.DTO.JobDTO;
+import com.backend.helpdesk.DTO.TaskDTO;
+import com.backend.helpdesk.DTO.UserDTO;
 import com.backend.helpdesk.common.Constants;
 import com.backend.helpdesk.converter.Converter;
 import com.backend.helpdesk.entity.Job;
 import com.backend.helpdesk.entity.Task;
+import com.backend.helpdesk.entity.UserEntity;
 import com.backend.helpdesk.exception.UserException.NotFoundException;
 import com.backend.helpdesk.repository.JobRepository;
 import com.backend.helpdesk.repository.TaskRepository;
@@ -31,6 +34,12 @@ public class JobService {
     private Converter<JobDTO,Job> jobDTOJobConverter;
 
     @Autowired
+    private Converter<UserEntity, UserDTO> userEntityUserDTOConverter;
+
+    @Autowired
+    private Converter<Task, TaskDTO> taskTaskDTOConverter;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -52,12 +61,11 @@ public class JobService {
         Calendar calendar = Calendar.getInstance();
         jobDTO.setCreateAt(calendar);
         jobDTO.setUpdateAt(calendar);
-        Job job=jobDTOJobConverter.convert(jobDTO);
-        job.setStatus(Constants.PENDING);
-        job.setUserCreate(userRepository.findById(userService.getUserId()).get());
-        job.setTask(task.get());
-        jobRepository.save(job);
-        return jobJobDTOConverter.convert(job);
+        jobDTO.setStatus(Constants.PENDING);
+        jobDTO.setUserCreate(userEntityUserDTOConverter.convert(userRepository.findById(userService.getUserId()).get()));
+        jobDTO.setTask(taskTaskDTOConverter.convert(task.get()));
+        jobRepository.save(jobDTOJobConverter.convert(jobDTO));
+        return jobDTO;
     }
 
     public void deleteJob(int id){
