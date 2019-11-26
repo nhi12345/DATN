@@ -25,8 +25,8 @@ public class CommentController {
 
     @Secured("ROLE_EMPLOYEES")
     @PostMapping("/task/{id}")
-    public CommentDTO addComment(@PathVariable("id") int id, @Valid @RequestBody CommentDTO commentDTO){
-        return commentService.addComment(id,commentDTO);
+    public CommentDTO addComment(@PathVariable("id") int id, @RequestParam(value = "content", required = false) String content){
+        return commentService.addComment(id,content);
     }
 
     @Secured("ROLE_EMPLOYEES")
