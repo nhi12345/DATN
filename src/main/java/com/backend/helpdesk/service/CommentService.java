@@ -53,17 +53,15 @@ public class CommentService {
         return commentCommentDTOConverter.convert(commentRepository.findByTask(task.get()));
     }
 
-    public CommentDTO addComment(int id,String content){
+    public CommentDTO addComment(int id,CommentDTO commentDTO){
         Optional<Task> task=taskRepository.findById(id);
         if(!task.isPresent()){
             throw new NotFoundException("Task not found");
         }
-        Comment comment=new Comment();
-        comment.setContent(content);
-        comment.setUserEntity(userRepository.findById(userService.getUserId()).get());
-        comment.setTask(task.get());
-        commentRepository.save(comment);
-        return commentCommentDTOConverter.convert(comment);
+        commentDTO.setUserDTO(userEntityUserDTOConverter.convert(userRepository.findById(userService.getUserId()).get()));
+        commentDTO.setTaskDTO(taskTaskDTOConverter.convert(task.get()));
+        commentRepository.save(commentDTOCommentConverter.convert(commentDTO));
+        return commentDTO;
     }
 
     public void deleteComment(int id){
