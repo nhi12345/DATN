@@ -40,7 +40,6 @@ public class TaskController {
     public Task editTask(@PathVariable("id") int id, @Valid @RequestBody TaskDTO taskDTO) {
         return taskService.editTask(id, taskDTO);
     }
-
     @Secured("ROLE_MANAGE")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") int id) {
