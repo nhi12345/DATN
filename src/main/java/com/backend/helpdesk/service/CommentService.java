@@ -24,10 +24,10 @@ public class CommentService {
     private CommentRepository commentRepository;
 
     @Autowired
-    private Converter<Comment,CommentDTO> commentCommentDTOConverter;
+    private Converter<Comment, CommentDTO> commentCommentDTOConverter;
 
     @Autowired
-    private Converter<CommentDTO,Comment> commentDTOCommentConverter;
+    private Converter<CommentDTO, Comment> commentDTOCommentConverter;
 
     @Autowired
     private TaskRepository taskRepository;
@@ -45,17 +45,17 @@ public class CommentService {
     private Converter<Task, TaskDTO> taskTaskDTOConverter;
 
 
-    public List<CommentDTO> getCommentByTask(int id){
-        Optional<Task> task=taskRepository.findById(id);
-        if(!task.isPresent()){
+    public List<CommentDTO> getCommentByTask(int id) {
+        Optional<Task> task = taskRepository.findById(id);
+        if (!task.isPresent()) {
             throw new NotFoundException("Task not found");
         }
         return commentCommentDTOConverter.convert(commentRepository.findByTask(task.get()));
     }
 
-    public CommentDTO addComment(int id,CommentDTO commentDTO){
-        Optional<Task> task=taskRepository.findById(id);
-        if(!task.isPresent()){
+    public CommentDTO addComment(int id, CommentDTO commentDTO) {
+        Optional<Task> task = taskRepository.findById(id);
+        if (!task.isPresent()) {
             throw new NotFoundException("Task not found");
         }
         commentDTO.setUserDTO(userEntityUserDTOConverter.convert(userRepository.findById(userService.getUserId()).get()));
@@ -64,12 +64,14 @@ public class CommentService {
         return commentDTO;
     }
 
-    public void deleteComment(int id){
-        Optional<Comment> comment=commentRepository.findById(id);
-        if(!comment.isPresent()){
+    public List<CommentDTO> deleteComment(int id) {
+        Optional<Comment> comment = commentRepository.findById(id);
+        if (!comment.isPresent()) {
             throw new NotFoundException("Comment not found");
         }
+        Task task = comment.get().getTask();
         commentRepository.delete(comment.get());
+        return commentCommentDTOConverter.convert(commentRepository.findByTask(task));
     }
 
 

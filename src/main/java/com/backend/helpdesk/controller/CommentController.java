@@ -31,7 +31,7 @@ public class CommentController {
 
     @Secured("ROLE_EMPLOYEES")
     @DeleteMapping("/{id}")
-    public void deleteComment(@PathVariable("id") int id){
-        commentService.deleteComment(id);
+    public List<CommentDTO> deleteComment(@PathVariable("id") int id){
+        return commentService.deleteComment(id);
     }
 }
