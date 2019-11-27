@@ -1,9 +1,11 @@
 package com.backend.helpdesk.service;
 
 import com.backend.helpdesk.DTO.ProjectDTO;
+import com.backend.helpdesk.DTO.UserDTO;
 import com.backend.helpdesk.common.Constants;
 import com.backend.helpdesk.converter.ConvertProject.ProjectDTOToProjectConvert;
 import com.backend.helpdesk.converter.ConvertProject.ProjectToProjectDTOConvert;
+import com.backend.helpdesk.converter.Converter;
 import com.backend.helpdesk.entity.Project;
 import com.backend.helpdesk.entity.Status;
 import com.backend.helpdesk.entity.UserEntity;
@@ -47,6 +49,9 @@ public class ProjectService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private Converter<UserEntity, UserDTO> userEntityUserDTOConverter;
+
     public List<ProjectDTO> getAllProject() {
 //        Optional<Status> status = statusRepository.findByName(Constants.APPROVED);
         return projectToProjectDTOConvert.convert(projectRepository.findAll());
@@ -74,12 +79,10 @@ public class ProjectService {
         Calendar calendar = Calendar.getInstance();
         projectDTO.setCreateAt(calendar);
         projectDTO.setUpdateAt(calendar);
-//        projectDTO.setUserIdCreate(userService.getUserId());
         projectDTO.setStatus(Constants.PENDING);
-        Project project = projectDTOToProjectConvert.convert(projectDTO);
-        project.setUserCreate(userRepository.findById(userService.getUserId()).get());
         UserEntity userEntity=userRepository.findById(userService.getUserId()).get();
-        projectRepository.save(project);
+        projectDTO.setUserCreate(userEntityUserDTOConverter.convert(userEntity));
+        Project project = projectDTOToProjectConvert.convert(projectDTO);
         userEntity.getProjects().add(project);
         userRepository.save(userEntity);
         return projectToProjectDTOConvert.convert(project);
