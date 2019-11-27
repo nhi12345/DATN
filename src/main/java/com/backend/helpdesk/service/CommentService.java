@@ -53,13 +53,13 @@ public class CommentService {
         }
         return commentCommentDTOConverter.convert(commentRepository.findByTask(task.get()));
     }
-
     public CommentDTO addComment(int id, CommentDTO commentDTO) {
         Optional<Task> task = taskRepository.findById(id);
         if (!task.isPresent()) {
             throw new NotFoundException("Task not found");
         }
         Calendar calendar = Calendar.getInstance();
+
         commentDTO.setCreateAt(calendar);
         commentDTO.setUserDTO(userEntityUserDTOConverter.convert(userRepository.findById(userService.getUserId()).get()));
         commentDTO.setTaskDTO(taskTaskDTOConverter.convert(task.get()));
