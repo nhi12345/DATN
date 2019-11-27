@@ -8,6 +8,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Calendar;
 
 @Data
 @Entity(name = "comments")
@@ -22,6 +23,11 @@ public class Comment {
     @Column(nullable = false)
     @NonNull
     private String content;
+
+    @JsonAlias("create_at")
+    @Column(nullable = false)
+    @NonNull
+    private Calendar createAt;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

@@ -14,6 +14,7 @@ import com.backend.helpdesk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +59,8 @@ public class CommentService {
         if (!task.isPresent()) {
             throw new NotFoundException("Task not found");
         }
+        Calendar calendar = Calendar.getInstance();
+        commentDTO.setCreateAt(calendar);
         commentDTO.setUserDTO(userEntityUserDTOConverter.convert(userRepository.findById(userService.getUserId()).get()));
         commentDTO.setTaskDTO(taskTaskDTOConverter.convert(task.get()));
         commentRepository.save(commentDTOCommentConverter.convert(commentDTO));

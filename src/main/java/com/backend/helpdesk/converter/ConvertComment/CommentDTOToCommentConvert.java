@@ -24,6 +24,7 @@ public class CommentDTOToCommentConvert extends Converter<CommentDTO, Comment> {
         Comment comment = new Comment();
         comment.setId(source.getId());
         comment.setContent(source.getContent());
+        comment.setCreateAt(source.getCreateAt());
         comment.setUserEntity(userDTOUserEntityConverter.convert(source.getUserDTO()));
         comment.setTask(taskDTOTaskConverter.convert(source.getTaskDTO()));
         return comment;
