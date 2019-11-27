@@ -107,8 +107,8 @@ public class JobService {
             throw new NotFoundException("Task not found!");
         }
         float result=0;
-        int jobApproved=jobRepository.findByStatusAndTask(Constants.APPROVED,task.get()).size();
-        int jobSum=jobRepository.findByTask(task.get()).size();
+        float jobApproved=jobRepository.findByStatusAndTask(Constants.APPROVED,task.get()).size();
+        float jobSum=jobRepository.findByTask(task.get()).size();
         if(jobSum!=0){
             result=jobApproved/jobSum;
         }
