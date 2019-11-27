@@ -112,6 +112,6 @@ public class JobService {
         if(jobSum!=0){
             result=jobApproved/jobSum;
         }
-        return result;
+        return result*100;
     }
 }
