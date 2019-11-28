@@ -10,9 +10,7 @@ import com.backend.helpdesk.entity.Task;
 import com.backend.helpdesk.entity.UserEntity;
 import com.backend.helpdesk.exception.UserException.BadRequestException;
 import com.backend.helpdesk.exception.UserException.NotFoundException;
-import com.backend.helpdesk.repository.CardRepository;
-import com.backend.helpdesk.repository.TaskRepository;
-import com.backend.helpdesk.repository.UserRepository;
+import com.backend.helpdesk.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +38,12 @@ public class TaskService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
+    private JobRepository jobRepository;
 
     public TaskDTO getTask(int id){
         Optional<Task> task = taskRepository.findById(id);
@@ -90,14 +94,6 @@ public class TaskService {
         return taskRepository.save(task.get());
     }
 
-    public void deleteTask(int id) {
-        Optional<Task> task = taskRepository.findById(id);
-        if (!task.isPresent()) {
-            throw new NotFoundException("Task not found!");
-        }
-        taskRepository.delete(task.get());
-    }
-
     public TaskDTO addUserForTask(int id,String email){
         Optional<Task> task = taskRepository.findById(id);
         if (!task.isPresent()) {
@@ -139,4 +135,15 @@ public class TaskService {
         return taskToTaskDTOConvert.convert(taskRepository.save(task.get()));
     }
 
+    public List<TaskDTO> deleteTask(int id){
+        Optional<Task> task=taskRepository.findById(id);
+        if(!task.isPresent()){
+            throw new NotFoundException("Task not found");
+        }
+        Card card=task.get().getCard();
+        jobRepository.deleteInBatch(jobRepository.findByTask(task.get()));
+        commentRepository.deleteInBatch(commentRepository.findByTask(task.get()));
+        taskRepository.delete(task.get());
+        return taskToTaskDTOConvert.convert(taskRepository.findByCard(card));
+    }
 }

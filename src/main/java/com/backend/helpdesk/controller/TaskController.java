@@ -52,9 +52,14 @@ public class TaskController {
         return taskService.addUserForTask(id, email);
     }
 
-    @Secured("ROLE_MANAGE")
+    @Secured("ROLE_EMPLOYEES")
     @PutMapping("/replace_task/{idOld}/new_task/{idNew}/task/{id}")
     public TaskDTO replaceTask(@PathVariable("idOld") int idOldCard,@PathVariable("idNew") int idNewCard,@PathVariable("id") int idTask){
         return taskService.replaceTask(idOldCard,idNewCard,idTask);
+    }
+    @Secured("ROLE_EMPLOYEES")
+    @DeleteMapping("/{id}")
+    public List<TaskDTO> deleteTask(@PathVariable("id") int id){
+        return taskService.deleteTask(id);
     }
 }
