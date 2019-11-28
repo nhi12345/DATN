@@ -57,6 +57,7 @@ public class TaskController {
     public TaskDTO replaceTask(@PathVariable("idOld") int idOldCard,@PathVariable("idNew") int idNewCard,@PathVariable("id") int idTask){
         return taskService.replaceTask(idOldCard,idNewCard,idTask);
     }
+
     @Secured("ROLE_EMPLOYEES")
     @DeleteMapping("/{id}")
     public List<TaskDTO> deleteTask(@PathVariable("id") int id){
