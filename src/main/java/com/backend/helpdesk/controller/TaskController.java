@@ -40,11 +40,11 @@ public class TaskController {
     public Task editTask(@PathVariable("id") int id, @Valid @RequestBody TaskDTO taskDTO) {
         return taskService.editTask(id, taskDTO);
     }
-    @Secured("ROLE_MANAGE")
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") int id) {
-        taskService.deleteTask(id);
-    }
+//    @Secured("ROLE_MANAGE")
+//    @DeleteMapping("/{id}")
+//    public void delete(@PathVariable("id") int id) {
+//        taskService.deleteTask(id);
+//    }
 
     @Secured("ROLE_EMPLOYEES")
     @PutMapping("/users/{id}")
@@ -57,10 +57,10 @@ public class TaskController {
     public TaskDTO replaceTask(@PathVariable("idOld") int idOldCard,@PathVariable("idNew") int idNewCard,@PathVariable("id") int idTask){
         return taskService.replaceTask(idOldCard,idNewCard,idTask);
     }
-//
-//    @Secured("ROLE_EMPLOYEES")
-//    @DeleteMapping("/{id}")
-//    public List<TaskDTO> deleteTask(@PathVariable("id") int id){
-//        return taskService.deleteTask(id);
-//    }
+
+    @Secured("ROLE_EMPLOYEES")
+    @DeleteMapping("/{id}")
+    public List<TaskDTO> deleteTask(@PathVariable("id") int id){
+        return taskService.deleteTask(id);
+    }
 }
