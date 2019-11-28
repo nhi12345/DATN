@@ -135,15 +135,15 @@ public class TaskService {
         return taskToTaskDTOConvert.convert(taskRepository.save(task.get()));
     }
 
-    public List<TaskDTO> deleteTask(int id){
-        Optional<Task> task=taskRepository.findById(id);
-        if(!task.isPresent()){
-            throw new NotFoundException("Task not found");
-        }
-        Card card=task.get().getCard();
-        jobRepository.deleteInBatch(jobRepository.findByTask(task.get()));
-        commentRepository.deleteInBatch(commentRepository.findByTask(task.get()));
-        taskRepository.delete(task.get());
-        return taskToTaskDTOConvert.convert(taskRepository.findByCard(card));
-    }
+//    public List<TaskDTO> deleteTask(int id){
+//        Optional<Task> task=taskRepository.findById(id);
+//        if(!task.isPresent()){
+//            throw new NotFoundException("Task not found");
+//        }
+//        Card card=task.get().getCard();
+//        jobRepository.deleteInBatch(jobRepository.findByTask(task.get()));
+//        commentRepository.deleteInBatch(commentRepository.findByTask(task.get()));
+//        taskRepository.delete(task.get());
+//        return taskToTaskDTOConvert.convert(taskRepository.findByCard(card));
+//    }
 }
