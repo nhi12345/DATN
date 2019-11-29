@@ -18,6 +18,12 @@ public class CommentController {
     private CommentService commentService;
 
     @Secured("ROLE_EMPLOYEES")
+    @GetMapping("/{id}")
+    public CommentDTO getComment(@PathVariable("id")int id) {
+        return commentService.getComment(id);
+    }
+
+    @Secured("ROLE_EMPLOYEES")
     @GetMapping("/task/{id}")
     public List<CommentDTO> getCommentByTask(@PathVariable("id")int id) {
         return commentService.getCommentByTask(id);

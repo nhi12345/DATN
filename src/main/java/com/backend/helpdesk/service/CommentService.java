@@ -45,6 +45,13 @@ public class CommentService {
     @Autowired
     private Converter<Task, TaskDTO> taskTaskDTOConverter;
 
+    public CommentDTO getComment(int id){
+        Optional<Comment> comment = commentRepository.findById(id);
+        if (!comment.isPresent()) {
+            throw new NotFoundException("Comment not found");
+        }
+        return commentCommentDTOConverter.convert(comment.get());
+    }
 
     public List<CommentDTO> getCommentByTask(int id) {
         Optional<Task> task = taskRepository.findById(id);
