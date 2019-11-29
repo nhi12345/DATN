@@ -18,6 +18,12 @@ public class JobController {
     private JobService jobService;
 
     @Secured("ROLE_EMPLOYEES")
+    @GetMapping("/{id}")
+    public JobDTO getJob(@PathVariable("id")int id) {
+        return jobService.getJob(id);
+    }
+
+    @Secured("ROLE_EMPLOYEES")
     @GetMapping("/task/{id}")
     public List<JobDTO> getJobByTask(@PathVariable("id")int id) {
         return jobService.getJobByTask(id);

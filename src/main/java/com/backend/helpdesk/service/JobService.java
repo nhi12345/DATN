@@ -45,6 +45,14 @@ public class JobService {
     @Autowired
     private UserService userService;
 
+    public JobDTO getJob(int id){
+        Optional<Job> job=jobRepository.findById(id);
+        if(!job.isPresent()){
+            throw new NotFoundException("Job not found");
+        }
+        return jobJobDTOConverter.convert(job.get());
+    }
+
     public List<JobDTO> getJobByTask(int id){
         Optional<Task> task=taskRepository.findById(id);
         if(!task.isPresent()){
