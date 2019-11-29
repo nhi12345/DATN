@@ -65,7 +65,7 @@ public class JobService {
         jobDTO.setUserCreate(userEntityUserDTOConverter.convert(userRepository.findById(userService.getUserId()).get()));
         jobDTO.setTask(taskTaskDTOConverter.convert(task.get()));
         jobRepository.save(jobDTOJobConverter.convert(jobDTO));
-        jobDTO.setId(jobRepository.save(jobDTOJobConverter.convert(jobDTO)).getId());
+        jobDTO.setId(jobDTOJobConverter.convert(jobDTO).getId());
         return jobDTO;
     }
 
