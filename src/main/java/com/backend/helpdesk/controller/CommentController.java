@@ -36,6 +36,12 @@ public class CommentController {
     }
 
     @Secured("ROLE_EMPLOYEES")
+    @PutMapping("/edit/{id}")
+    public CommentDTO editComment(@PathVariable("id") int id,@Valid @RequestBody  CommentDTO commentDTO){
+        return commentService.updateComment(id,commentDTO);
+    }
+
+    @Secured("ROLE_EMPLOYEES")
     @DeleteMapping("/{id}")
     public List<CommentDTO> deleteComment(@PathVariable("id") int id){
         return commentService.deleteComment(id);

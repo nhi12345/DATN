@@ -68,11 +68,24 @@ public class CommentService {
         Calendar calendar = Calendar.getInstance();
 
         commentDTO.setCreateAt(calendar);
+        commentDTO.setUpdateAt(calendar);
         commentDTO.setUserDTO(userEntityUserDTOConverter.convert(userRepository.findById(userService.getUserId()).get()));
         commentDTO.setTaskDTO(taskTaskDTOConverter.convert(task.get()));
         commentRepository.save(commentDTOCommentConverter.convert(commentDTO));
         commentDTO.setId(commentDTOCommentConverter.convert(commentDTO).getId());
         return commentDTO;
+    }
+
+    public CommentDTO updateComment(int id, CommentDTO commentDTO) {
+        Optional<Comment> comment = commentRepository.findById(id);
+        if (!comment.isPresent()) {
+            throw new NotFoundException("Comment not found");
+        }
+        Calendar calendar = Calendar.getInstance();
+        comment.get().setUpdateAt(calendar);
+        comment.get().setContent(commentDTO.getContent());
+        commentRepository.save(comment.get());
+        return commentCommentDTOConverter.convert(comment.get());
     }
 
     public List<CommentDTO> deleteComment(int id) {

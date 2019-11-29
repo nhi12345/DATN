@@ -9,6 +9,7 @@ public class CommentDTO {
     private int id;
     private String content;
     private Calendar createAt;
+    private Calendar updateAt;
     private UserDTO userDTO;
     private TaskDTO taskDTO;
 }

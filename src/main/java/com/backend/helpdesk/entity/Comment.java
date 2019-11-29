@@ -29,6 +29,11 @@ public class Comment {
     @NonNull
     private Calendar createAt;
 
+    @JsonAlias("update_at")
+    @Column(nullable = false)
+    @NonNull
+    private Calendar updateAt;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
