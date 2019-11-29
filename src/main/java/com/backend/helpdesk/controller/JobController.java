@@ -49,7 +49,7 @@ public class JobController {
 
     @Secured("ROLE_EMPLOYEES")
     @GetMapping("/process/{id}")
-    public float getProcess(@PathVariable("id") int id){
+    public int getProcess(@PathVariable("id") int id){
         return jobService.geProcess(id);
     }
 
