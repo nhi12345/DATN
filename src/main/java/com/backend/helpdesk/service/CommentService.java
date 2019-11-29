@@ -71,8 +71,9 @@ public class CommentService {
         commentDTO.setUpdateAt(calendar);
         commentDTO.setUserDTO(userEntityUserDTOConverter.convert(userRepository.findById(userService.getUserId()).get()));
         commentDTO.setTaskDTO(taskTaskDTOConverter.convert(task.get()));
-        commentRepository.save(commentDTOCommentConverter.convert(commentDTO));
-        commentDTO.setId(commentDTOCommentConverter.convert(commentDTO).getId());
+        Comment comment=commentDTOCommentConverter.convert(commentDTO);
+        commentRepository.save(comment);
+        commentDTO.setId(comment.getId());
         return commentDTO;
     }
 
