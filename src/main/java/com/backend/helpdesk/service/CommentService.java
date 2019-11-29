@@ -64,6 +64,7 @@ public class CommentService {
         commentDTO.setUserDTO(userEntityUserDTOConverter.convert(userRepository.findById(userService.getUserId()).get()));
         commentDTO.setTaskDTO(taskTaskDTOConverter.convert(task.get()));
         commentRepository.save(commentDTOCommentConverter.convert(commentDTO));
+        commentDTO.setId(commentRepository.save(commentDTOCommentConverter.convert(commentDTO)).getId());
         return commentDTO;
     }
 
