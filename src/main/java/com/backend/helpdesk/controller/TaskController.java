@@ -36,7 +36,7 @@ public class TaskController {
     }
 
     @Secured("ROLE_MANAGE")
-    @PutMapping("/id")
+    @PutMapping("/{id}")
     public Task editTask(@PathVariable("id") int id, @Valid @RequestBody TaskDTO taskDTO) {
         return taskService.editTask(id, taskDTO);
     }
