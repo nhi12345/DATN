@@ -89,7 +89,7 @@ public class TaskService {
         }
         Calendar calendar = Calendar.getInstance();
         task.get().setUpdateAt(calendar);
-        task.get().setName(taskDTO.getName());
+//        task.get().setName(taskDTO.getName());
         task.get().setDescription(taskDTO.getDescription());
         return taskRepository.save(task.get());
     }
