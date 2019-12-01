@@ -8,15 +8,7 @@ import java.util.Calendar;
 @Data
 public class TaskDTO {
 
-    private int id;
-
-    private String name;
-
-    private String description;
-
-    private Calendar createAt;
-
-    private Calendar updateAt;
+    private int id;guCalendar updateAt;
 
     private int idCard;
 
