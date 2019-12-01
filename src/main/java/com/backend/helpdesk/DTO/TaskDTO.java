@@ -10,10 +10,8 @@ public class TaskDTO {
 
     private int id;
 
-    @NotBlank
     private String name;
 
-    @NotBlank
     private String description;
 
     private Calendar createAt;
