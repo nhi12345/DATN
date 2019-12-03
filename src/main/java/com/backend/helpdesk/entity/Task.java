@@ -46,7 +46,7 @@ public class Task {
     private UserEntity userCreate;
 
     @JsonAlias("deadline")
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private Calendar deadline;
 
     @JsonIgnore
