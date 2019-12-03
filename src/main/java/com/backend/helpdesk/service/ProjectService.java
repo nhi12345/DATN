@@ -85,7 +85,8 @@ public class ProjectService {
         Project project = projectDTOToProjectConvert.convert(projectDTO);
         userEntity.getProjects().add(project);
         userRepository.save(userEntity);
-        return projectToProjectDTOConvert.convert(project);
+        projectDTO.setId(project.getId());
+        return projectDTO;
     }
 
     public Project editProject(int id, ProjectDTO projectDTO) {
