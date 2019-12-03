@@ -45,6 +45,11 @@ public class Task {
     @JoinColumn(name = "user_create")
     private UserEntity userCreate;
 
+    @JsonAlias("deadline")
+    @Column(nullable = false)
+    @NonNull
+    private Calendar deadline;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id")

@@ -26,6 +26,7 @@ public class TaskDTOToTaskConvert extends Converter<TaskDTO, Task> {
         task.setDescription(source.getDescription());
         task.setCreateAt(source.getCreateAt());
         task.setUpdateAt(source.getUpdateAt());
+        task.setDeadline(source.getDeadline());
         task.setCard(cardRepository.findById(source.getIdCard()).get());
         task.setUserCreate(userRepository.findById(source.getIdUserCreate()).get());
         return task;

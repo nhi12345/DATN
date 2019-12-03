@@ -146,4 +146,14 @@ public class TaskService {
         taskRepository.delete(task.get());
         return taskToTaskDTOConvert.convert(taskRepository.findByCard(card));
     }
+
+    public TaskDTO setDeadline(int id,TaskDTO taskDTO){
+        Optional<Task> task=taskRepository.findById(id);
+        if(!task.isPresent()){
+            throw new NotFoundException("Task not found");
+        }
+        task.get().setDeadline(taskDTO.getDeadline());
+        taskRepository.save(task.get());
+        return taskToTaskDTOConvert.convert(task.get());
+    }
 }

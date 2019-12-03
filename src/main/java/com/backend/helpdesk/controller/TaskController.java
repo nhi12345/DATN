@@ -58,4 +58,10 @@ public class TaskController {
     public List<TaskDTO> deleteTask(@PathVariable("id") int id){
         return taskService.deleteTask(id);
     }
+
+    @Secured("ROLE_MANAGE")
+    @PutMapping("/set_deadline/{id}")
+    public TaskDTO setDeadLine(@PathVariable("id") int id, @RequestBody TaskDTO taskDTO){
+        return taskService.setDeadline(id, taskDTO);
+    }
 }

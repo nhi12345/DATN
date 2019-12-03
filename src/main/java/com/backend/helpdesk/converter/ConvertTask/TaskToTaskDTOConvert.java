@@ -15,6 +15,7 @@ public class TaskToTaskDTOConvert extends Converter<Task, TaskDTO> {
         taskDTO.setDescription(source.getDescription());
         taskDTO.setCreateAt(source.getCreateAt());
         taskDTO.setUpdateAt(source.getUpdateAt());
+        taskDTO.setDeadline(source.getDeadline());
         taskDTO.setIdCard(source.getCard().getId());
         taskDTO.setIdUserCreate(source.getUserCreate().getId());
         return taskDTO;
