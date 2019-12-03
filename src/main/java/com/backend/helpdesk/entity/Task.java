@@ -47,7 +47,6 @@ public class Task {
 
     @JsonAlias("deadline")
     @Column(nullable = false)
-    @NonNull
     private Calendar deadline;
 
     @JsonIgnore
