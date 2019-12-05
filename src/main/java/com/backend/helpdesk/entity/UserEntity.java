@@ -36,6 +36,8 @@ public class UserEntity {
 
     private boolean gender;
 
+    private String sex;
+
     private String address;
 
     private Date startingDay;
@@ -55,6 +57,14 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<RoleEntity> roleEntities;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_skills",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id")
+    )
+    private Set<SkillsEntity> skillsEntities;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
