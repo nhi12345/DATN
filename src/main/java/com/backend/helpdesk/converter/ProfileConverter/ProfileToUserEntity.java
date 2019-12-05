@@ -9,7 +9,6 @@ import com.backend.helpdesk.repository.SkillsRepository;
 import com.backend.helpdesk.service.SkillsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
