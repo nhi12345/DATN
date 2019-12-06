@@ -24,7 +24,9 @@ public class UserToUserDTO extends Converter<UserEntity, UserDTO> {
         userDTO.setEmail(source.getEmail());
         userDTO.setFirstName(source.getFirstName());
         userDTO.setLastName(source.getLastName());
-        userDTO.setAvatar(source.getAvatar());
+        if(source.getAvatar() != null){
+            userDTO.setAvatar(new String(Base64.getEncoder().encode(source.getAvatar())));
+        }
         userDTO.setStartingDay(source.getStartingDay());
         return userDTO;
 

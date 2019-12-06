@@ -26,7 +26,7 @@ public class UserDTO {
 
     private int age;
 
-    private byte[] avatar;
+    private String avatar;
 
     private Date birthday;
 
