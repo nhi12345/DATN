@@ -41,7 +41,6 @@ public class ProfileController {
         }
         profileService.uploadAvatar(avatar.getBytes(), idUser);
     }
-
     @GetMapping("/user")
     public Profile getProfileFollowIdUser(@RequestParam int idUser) {
         return profileService.getProfileFollowIdUser(idUser);
