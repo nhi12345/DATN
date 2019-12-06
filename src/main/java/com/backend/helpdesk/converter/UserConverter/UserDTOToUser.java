@@ -20,6 +20,7 @@ public class UserDTOToUser extends Converter<UserDTO, UserEntity> {
         userEntity.setEmail(source.getEmail());
         userEntity.setAddress(source.getAddress());
         userEntity.setAge(source.getAge());
+        userEntity.setAvatar(source.getAvatar());
         userEntity.setBirthday(source.getBirthday());
         userEntity.setEmail(source.getEmail());
         userEntity.setFirstName(source.getFirstName());

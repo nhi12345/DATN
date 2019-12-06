@@ -17,7 +17,6 @@ public class UserToUserDTO extends Converter<UserEntity, UserDTO> {
     @Override
     public UserDTO convert(UserEntity source) {
         UserDTO userDTO = new UserDTO();
-
         userDTO.setId(source.getId());
         userDTO.setAddress(source.getAddress());
         userDTO.setAge(source.getAge());
@@ -25,6 +24,7 @@ public class UserToUserDTO extends Converter<UserEntity, UserDTO> {
         userDTO.setEmail(source.getEmail());
         userDTO.setFirstName(source.getFirstName());
         userDTO.setLastName(source.getLastName());
+        userDTO.setAvatar(source.getAvatar());
         userDTO.setStartingDay(source.getStartingDay());
         return userDTO;
     }
