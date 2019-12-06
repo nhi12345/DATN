@@ -27,5 +27,6 @@ public class UserToUserDTO extends Converter<UserEntity, UserDTO> {
         userDTO.setAvatar(source.getAvatar());
         userDTO.setStartingDay(source.getStartingDay());
         return userDTO;
+
     }
 }
