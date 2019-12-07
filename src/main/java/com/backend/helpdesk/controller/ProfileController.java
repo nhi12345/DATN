@@ -20,7 +20,7 @@ public class ProfileController {
     @Autowired
     ProfileService profileService;
 
-    @Secured("ROLE_EMPLOYEES")
+//    @Secured("ROLE_EMPLOYEES")
     @GetMapping
     public Profile getProfile() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

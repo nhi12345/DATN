@@ -45,7 +45,7 @@ public class UserController {
     @Secured("ROLE_ADMIN")
     @GetMapping("/project/{id}")
     public List<UserDTO> getUser(@PathVariable("id") int id){
-        return userService.getUsers(id);
+        return userService.getUsers (id);
     }
 
 }
