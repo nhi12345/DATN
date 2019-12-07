@@ -37,7 +37,7 @@ public class ProjectController {
         return projectService.getProjectsByUser(id);
     }
 
-    @Secured("ROLE_MANAGE")
+    @Secured("ROLE_EMPLOYEES")
     @GetMapping("/{id}")
     public ProjectDTO getProjectById(@PathVariable("id") int id) {
         return projectService.getProjectById(id);
@@ -49,13 +49,13 @@ public class ProjectController {
         return projectService.addProject(projectDTO);
     }
 
-    @Secured("ROLE_MANAGE")
+    @Secured("ROLE_ADMIN")
     @PutMapping("/{id}")
     public Project editProject(@PathVariable("id") int id, @Valid @RequestBody ProjectDTO projectDTO) {
         return projectService.editProject(id, projectDTO);
     }
 
-    @Secured("ROLE_MANAGE")
+    @Secured("ROLE_ADMIN")
     @PutMapping("/reject/{id}")
     public ProjectDTO deleteProject(@PathVariable("id") int id) {
         return projectService.deleteProject(id);
@@ -67,13 +67,13 @@ public class ProjectController {
         return projectService.acceptProject(id);
     }
 
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGE")
     @PutMapping("/add_user/{id}")
     public ProjectDTO addUserForProject(@PathVariable("id") int id, @RequestParam(value = "email", required = false) String email) {
         return projectService.addUserForProject(id, email);
     }
 
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_MANAGE")
     @PutMapping("/remove_user/{id}")
     public ProjectDTO  removeUserForProject(@PathVariable("id") int id, @RequestParam(value = "email", required = false) String email) {
         return projectService.removeUserInProject(id, email);
