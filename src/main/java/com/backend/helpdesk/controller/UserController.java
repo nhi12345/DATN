@@ -42,7 +42,7 @@ public class UserController {
         userService.setStatusEnableOfUser(idUser, false);
     }
 
-    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_EMPLOYEES")
     @GetMapping("/project/{id}")
     public List<UserDTO> getUsersByProject(@PathVariable("id") int id){
         return userService.getUsersByProject (id);
