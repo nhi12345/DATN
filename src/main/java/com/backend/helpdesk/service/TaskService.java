@@ -168,7 +168,7 @@ public class TaskService {
         }
         List<Task> tasks = userEntity.get().getTasks();
         if (tasks.contains(task.get())) {
-            userEntity.get().getProjects().remove(task.get());
+            userEntity.get().getTasks().remove(task.get());
         } else {
             throw new BadRequestException("User isn't existed!");
         }
