@@ -82,7 +82,7 @@ public class UserEntity {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "user_project",
+            name = "user_task",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "task_id")
     )

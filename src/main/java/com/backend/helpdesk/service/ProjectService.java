@@ -80,6 +80,7 @@ public class ProjectService {
         UserEntity userEntity=userRepository.findById(userService.getUserId()).get();
         projectDTO.setUserCreate(userEntityUserDTOConverter.convert(userEntity));
         Project project = projectDTOToProjectConvert.convert(projectDTO);
+        projectRepository.save(project);
         userEntity.getProjects().add(project);
         userRepository.save(userEntity);
         projectDTO.setId(project.getId());
