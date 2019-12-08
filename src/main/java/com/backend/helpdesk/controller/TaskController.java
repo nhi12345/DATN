@@ -60,6 +60,7 @@ public class TaskController {
         return taskService.setDeadline(id, taskDTO);
     }
 
+
     @Secured("ROLE_MANAGE")
     @PutMapping("/add_user/{id}")
     public TaskDTO addUserForTask(@PathVariable("id") int id, @RequestParam(value = "email", required = false) String email) {
