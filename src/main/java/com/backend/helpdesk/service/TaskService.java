@@ -1,5 +1,6 @@
 package com.backend.helpdesk.service;
 
+import com.backend.helpdesk.DTO.ProjectDTO;
 import com.backend.helpdesk.DTO.TaskDTO;
 import com.backend.helpdesk.converter.ConvertCard.CardToCardDTOConvert;
 import com.backend.helpdesk.converter.ConvertTask.TaskDTOToTaskConvert;
@@ -94,26 +95,6 @@ public class TaskService {
         return taskRepository.save(task.get());
     }
 
-    public TaskDTO addUserForTask(int id,String email){
-        Optional<Task> task = taskRepository.findById(id);
-        if (!task.isPresent()) {
-            throw new NotFoundException("Task not found!");
-        }
-        Optional<UserEntity> userEntity=userRepository.findByEmail(email);
-        if(!userEntity.isPresent()){
-            throw new NotFoundException("User not found!");
-        }
-        Project project=task.get().getCard().getProject();
-        if(!userEntity.get().getProjects().contains(project)){
-            throw new BadRequestException("User not allow!");
-        }
-        List<UserEntity> userEntities=new ArrayList<>();
-        userEntities.add(userEntity.get());
-        task.get().setUserEntities(userEntities);
-        taskRepository.save(task.get());
-        return taskToTaskDTOConvert.convert(task.get());
-    }
-
     public TaskDTO replaceTask(int idOldCard,int idNewCard,int idTask){
         Optional<Task> task=taskRepository.findById(idTask);
         if(!task.isPresent()){
@@ -156,4 +137,43 @@ public class TaskService {
         taskRepository.save(task.get());
         return taskToTaskDTOConvert.convert(task.get());
     }
+
+    public TaskDTO addUserForTask(int id, String email) {
+        Optional<Task> task = taskRepository.findById(id);
+        if (!task.isPresent()) {
+            throw new NotFoundException("task not found!");
+        }
+        Optional<UserEntity> userEntity = userRepository.findByEmail(email);
+        if(!userEntity.isPresent()){
+            throw new NotFoundException("User not found!");
+        }
+        List<Task> tasks = userEntity.get().getTasks();
+        if(tasks.contains(task.get())) {
+            throw new BadRequestException("User is existed!");
+        }else {
+            userEntity.get().getTasks().add(task.get());
+        }
+        userRepository.save(userEntity.get());
+        return taskToTaskDTOConvert.convert(task.get());
+    }
+
+    public TaskDTO removeUserInTask(int id, String email) {
+        Optional<Task> task = taskRepository.findById(id);
+        if (!task.isPresent()) {
+            throw new NotFoundException("task not found!");
+        }
+        Optional<UserEntity> userEntity = userRepository.findByEmail(email);
+        if(!userEntity.isPresent()){
+            throw new NotFoundException("User not found!");
+        }
+        List<Task> tasks = userEntity.get().getTasks();
+        if (tasks.contains(task.get())) {
+            userEntity.get().getProjects().remove(task.get());
+        } else {
+            throw new BadRequestException("User isn't existed!");
+        }
+        userRepository.save(userEntity.get());
+        return taskToTaskDTOConvert.convert(task.get());
+    }
+
 }

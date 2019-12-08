@@ -1,5 +1,6 @@
 package com.backend.helpdesk.controller;
 
+import com.backend.helpdesk.DTO.ProjectDTO;
 import com.backend.helpdesk.DTO.TaskDTO;
 import com.backend.helpdesk.entity.Task;
 import com.backend.helpdesk.service.TaskService;
@@ -42,12 +43,6 @@ public class TaskController {
     }
 
     @Secured("ROLE_EMPLOYEES")
-    @PutMapping("/users/{id}")
-    public TaskDTO addUserForTask(@PathVariable("id") int id, @RequestParam(value = "email", required = false) String email) {
-        return taskService.addUserForTask(id, email);
-    }
-
-    @Secured("ROLE_EMPLOYEES")
     @PutMapping("/replace_task/{idOld}/new_task/{idNew}/task/{id}")
     public TaskDTO replaceTask(@PathVariable("idOld") int idOldCard,@PathVariable("idNew") int idNewCard,@PathVariable("id") int idTask){
         return taskService.replaceTask(idOldCard,idNewCard,idTask);
@@ -64,4 +59,17 @@ public class TaskController {
     public TaskDTO setDeadLine(@PathVariable("id") int id, @RequestBody TaskDTO taskDTO){
         return taskService.setDeadline(id, taskDTO);
     }
+
+    @Secured("ROLE_MANAGE")
+    @PutMapping("/add_user/{id}")
+    public TaskDTO addUserForTask(@PathVariable("id") int id, @RequestParam(value = "email", required = false) String email) {
+        return taskService.addUserForTask(id, email);
+    }
+
+    @Secured("ROLE_MANAGE")
+    @PutMapping("/remove_user/{id}")
+    public TaskDTO  removeUserForTask(@PathVariable("id") int id, @RequestParam(value = "email", required = false) String email) {
+        return taskService.removeUserInTask(id, email);
+    }
+
 }

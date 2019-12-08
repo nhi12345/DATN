@@ -53,7 +53,6 @@ public class ProjectService {
     private Converter<UserEntity, UserDTO> userEntityUserDTOConverter;
 
     public List<ProjectDTO> getAllProject() {
-//        Optional<Status> status = statusRepository.findByName(Constants.APPROVED);
         return projectToProjectDTOConvert.convert(projectRepository.findAll());
     }
 
@@ -62,8 +61,6 @@ public class ProjectService {
         if(!userEntity.isPresent()){
             throw new NotFoundException("User not found!");
         }
-        int a=userEntity.get().getProjects().size();
-        int c=0;
         return projectToProjectDTOConvert.convert(userEntity.get().getProjects());
     }
 

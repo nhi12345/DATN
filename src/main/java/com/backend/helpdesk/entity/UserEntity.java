@@ -80,6 +80,14 @@ public class UserEntity {
     @OneToMany(mappedBy = "userCreate")
     private List<Card> cards;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_project",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "task_id")
+    )
+    private List<Task> tasks;
+
     public UserEntity() {
     }
 

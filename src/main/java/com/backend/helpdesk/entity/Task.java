@@ -52,12 +52,7 @@ public class Task {
     @JoinColumn(name = "card_id")
     private Card card;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "task_user",
-            joinColumns = @JoinColumn(name = "task_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
+    @ManyToMany(mappedBy = "tasks")
     private List<UserEntity> userEntities;
 
     @OneToMany(mappedBy = "task")

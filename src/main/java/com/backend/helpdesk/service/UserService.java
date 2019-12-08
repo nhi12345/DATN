@@ -4,10 +4,12 @@ import com.backend.helpdesk.DTO.UserDTO;
 import com.backend.helpdesk.common.Constants;
 import com.backend.helpdesk.converter.Converter;
 import com.backend.helpdesk.entity.Project;
+import com.backend.helpdesk.entity.Task;
 import com.backend.helpdesk.entity.UserEntity;
 import com.backend.helpdesk.exception.UserException.UserNotFoundException;
 import com.backend.helpdesk.repository.ProjectRepository;
 import com.backend.helpdesk.repository.RoleRepository;
+import com.backend.helpdesk.repository.TaskRepository;
 import com.backend.helpdesk.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -34,6 +36,9 @@ public class UserService {
 
     @Autowired
     ProjectRepository projectRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     public void setStatusEnableOfUser(int idUser, boolean status) {
         Optional<UserEntity> userEntityOpt = userRepository.findById(idUser);
@@ -78,9 +83,14 @@ public class UserService {
         return false;
     }
 
-    public List<UserDTO> getUsers(int id){
+    public List<UserDTO> getUsersByProject(int id){
         Project project=projectRepository.findById(id).get();
         return userEntityUserDTOConverter.convert(project.getUserEntities());
+    }
+
+    public List<UserDTO> getUsersByTask(int id){
+        Task task=taskRepository.findById(id).get();
+        return userEntityUserDTOConverter.convert(task.getUserEntities());
     }
 
 }
