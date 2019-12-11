@@ -36,6 +36,8 @@ public class UserDTO {
 
     private Date startingDay;
 
+    private String role;
+
 
 
 }

@@ -28,6 +28,15 @@ public class UserToUserDTO extends Converter<UserEntity, UserDTO> {
             userDTO.setAvatar(new String(Base64.getEncoder().encode(source.getAvatar())));
         }
         userDTO.setStartingDay(source.getStartingDay());
+        if(source.getRoleEntities().size()==1){
+            userDTO.setRole("EMPLOYEE");
+        }
+        if(source.getRoleEntities().size()==2){
+            userDTO.setRole("MANAGE");
+        }
+        else {
+            userDTO.setRole("ADMIN");
+        }
         return userDTO;
 
     }
