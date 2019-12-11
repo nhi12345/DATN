@@ -1,8 +1,10 @@
 package com.backend.helpdesk.converter.UserConverter;
 
 import com.backend.helpdesk.DTO.UserDTO;
+import com.backend.helpdesk.common.Constants;
 import com.backend.helpdesk.converter.Converter;
 import com.backend.helpdesk.entity.UserEntity;
+import com.backend.helpdesk.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,9 @@ import java.util.List;
 @Component
 public class UserToUserDTO extends Converter<UserEntity, UserDTO> {
 
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public UserDTO convert(UserEntity source) {
@@ -28,14 +33,14 @@ public class UserToUserDTO extends Converter<UserEntity, UserDTO> {
             userDTO.setAvatar(new String(Base64.getEncoder().encode(source.getAvatar())));
         }
         userDTO.setStartingDay(source.getStartingDay());
-        if(source.getRoleEntities().size()==1){
-            userDTO.setRole("EMPLOYEE");
+        if(source.getRoleEntities().contains(roleRepository.findByName(Constants.ADMIN))){
+            userDTO.setRole("ADMIN");
         }
-        if(source.getRoleEntities().size()==2){
+        else if(source.getRoleEntities().contains(roleRepository.findByName(Constants.MANAGE))){
             userDTO.setRole("MANAGE");
         }
         else {
-            userDTO.setRole("ADMIN");
+            userDTO.setRole("EMPLOYEE");
         }
         return userDTO;
 
