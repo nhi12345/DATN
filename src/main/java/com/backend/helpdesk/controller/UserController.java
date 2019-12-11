@@ -54,4 +54,11 @@ public class UserController {
         return userService.getUsersByTask (id);
     }
 
+    @Secured("ROLE_ADMIN")
+    @PutMapping("/update_role/{id}")
+    public UserDTO updateRole(@PathVariable("id") int id,@RequestParam(value = "role", required = false) String role){
+        return userService.updateManage(id,role);
+    }
+
+
 }

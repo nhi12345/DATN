@@ -4,8 +4,10 @@ import com.backend.helpdesk.DTO.UserDTO;
 import com.backend.helpdesk.common.Constants;
 import com.backend.helpdesk.converter.Converter;
 import com.backend.helpdesk.entity.Project;
+import com.backend.helpdesk.entity.RoleEntity;
 import com.backend.helpdesk.entity.Task;
 import com.backend.helpdesk.entity.UserEntity;
+import com.backend.helpdesk.exception.UserException.NotFoundException;
 import com.backend.helpdesk.exception.UserException.UserNotFoundException;
 import com.backend.helpdesk.repository.ProjectRepository;
 import com.backend.helpdesk.repository.RoleRepository;
@@ -19,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.Role;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +52,7 @@ public class UserService {
         userEntity.setEnable(status);
         userRepository.save(userEntity);
     }
+
 
     public int getUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -92,5 +96,21 @@ public class UserService {
         Task task=taskRepository.findById(id).get();
         return userEntityUserDTOConverter.convert(task.getUserEntities());
     }
+
+    public UserDTO updateManage(int id,String role){
+        Optional<UserEntity> userEntity=userRepository.findById(id);
+        if(!userEntity.isPresent()){
+            throw new NotFoundException("User not found");
+        }
+        Optional<RoleEntity> role1=roleRepository.findByName(role);
+        if(!role1.isPresent()){
+            throw new NotFoundException("role not found");
+        }
+        userEntity.get().getRoleEntities().add(role1.get());
+        userRepository.save(userEntity.get());
+        return userEntityUserDTOConverter.convert(userEntity.get());
+    }
+
+
 
 }
