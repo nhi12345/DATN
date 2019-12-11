@@ -106,7 +106,10 @@ public class UserService {
         if(!role1.isPresent()){
             throw new NotFoundException("role not found");
         }
-        userEntity.get().getRoleEntities().add(role1.get());
+        if(role.equals(Constants.ADMIN)){
+            userEntity.get().getRoleEntities().add(role1.get());
+        }
+        userEntity.get().getRoleEntities().add(roleRepository.findByName(Constants.MANAGE).get());
         userRepository.save(userEntity.get());
         return userEntityUserDTOConverter.convert(userEntity.get());
     }
