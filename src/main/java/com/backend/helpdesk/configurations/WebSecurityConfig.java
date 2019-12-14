@@ -56,8 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .anyRequest()
                 .authenticated();
 
-        http.exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+//        http.exceptionHandling()
+//                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
         http
                 .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
