@@ -1,5 +1,6 @@
 package com.backend.helpdesk.service;
 
+import com.backend.helpdesk.DTO.Login;
 import com.backend.helpdesk.DTO.Token;
 import com.backend.helpdesk.common.CommonMethods;
 import com.backend.helpdesk.configurations.TokenProvider;
@@ -18,13 +19,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class AuthenticationService {
@@ -110,6 +109,19 @@ public class AuthenticationService {
         };
         userEntity.setRoleEntities(roleEntities);
         userRepository.save(userEntity);
+    }
+
+    public ResponseEntity<?> login(Login login) {
+        final Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        login.getEmail(),
+                        login.getPassword()
+                )
+        );
+        Optional<UserEntity> user=userRepository.findByEmail(login.getEmail());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        final String token = jwtTokenUtil.generateToken(authentication);
+        return ResponseEntity.ok(new Token(token));
     }
 
 

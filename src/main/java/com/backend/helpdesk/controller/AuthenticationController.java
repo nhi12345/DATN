@@ -1,5 +1,6 @@
 package com.backend.helpdesk.controller;
 
+import com.backend.helpdesk.DTO.Login;
 import com.backend.helpdesk.DTO.Token;
 import com.backend.helpdesk.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,15 @@ public class AuthenticationController {
 
 //    @Secured("ROLE_EMPLOYEES")
     @GetMapping
-    public ResponseEntity<?> login(@RequestHeader("token-google") String tokenGoogle) throws IOException, GeneralSecurityException {
+    public ResponseEntity<?> loginGoogle(@RequestHeader("token-google") String tokenGoogle) throws IOException, GeneralSecurityException {
         String email = authenticationService.getEmailFromTokenUser(tokenGoogle);
         ResponseEntity<Token> token=authenticationService.generateToken(email);
         int b=0;
         return authenticationService.generateToken(email);
+    }
+
+    @PostMapping
+    public ResponseEntity<?> login(@RequestBody Login login){
+        return authenticationService.login(login);
     }
 }
