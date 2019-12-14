@@ -26,7 +26,7 @@ public class AuthenticationController {
         return authenticationService.generateToken(email);
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public ResponseEntity<?> login(@RequestBody Login login){
         return authenticationService.login(login);
     }
