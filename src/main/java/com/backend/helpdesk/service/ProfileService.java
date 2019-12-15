@@ -2,6 +2,7 @@ package com.backend.helpdesk.service;
 
 import com.backend.helpdesk.DTO.Profile;
 import com.backend.helpdesk.converter.Converter;
+import com.backend.helpdesk.entity.Project;
 import com.backend.helpdesk.entity.UserEntity;
 import com.backend.helpdesk.exception.UserException.EmailUserIsNotMatch;
 import com.backend.helpdesk.exception.UserException.UserNotFoundException;
@@ -37,6 +38,7 @@ public class ProfileService {
     public void editProfile(Profile profile) {
 
         Optional<UserEntity> userEntityOpt = userRepository.findById(profile.getId());
+        List<Project> projects=userEntityOpt.get().getProjects();
         if (!userEntityOpt.isPresent()) {
             throw new UserNotFoundException();
         }
@@ -56,6 +58,8 @@ public class ProfileService {
 
         // add role default
         resultUserEntity.setRoleEntities(userEntity.getRoleEntities());
+
+        resultUserEntity.setProjects(projects);
 
         userRepository.save(resultUserEntity);
     }
